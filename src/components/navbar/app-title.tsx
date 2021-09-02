@@ -1,24 +1,29 @@
 import { makeStyles, Typography } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { UrlContext } from '../../contexts/url-context';
+import { Routes } from '../../shared/constants/routes';
 
 const appTitleStyle = makeStyles({
-  typography: {
+  withDecoration: {},
+  withoutDecoration: {
     textDecoration: 'none',
     color: 'white'
   }
 });
 
 export const AppTitle: React.FunctionComponent = () => {
-  const { landing } = useContext(UrlContext);
+  const [showUnderline, setShowUnderline] = useState(false);
   const classes = appTitleStyle();
   return (
     <Typography
       component={Link}
-      to={landing}
+      to={Routes.LANDING}
       variant="h6"
-      className={classes.typography}
+      onMouseEnter={() => setShowUnderline(true)}
+      onMouseLeave={() => setShowUnderline(false)}
+      className={
+        showUnderline ? classes.withDecoration : classes.withoutDecoration
+      }
     >
       Type Mania
     </Typography>

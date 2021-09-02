@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import React from 'react';
 import LandingBackgroundImage from '../../assets/images/background-landing-1.jpg';
 
@@ -6,7 +6,7 @@ const backgroundStyle = makeStyles({
   landingBackgroundImage: {
     backgroundImage: `url(${LandingBackgroundImage})`,
     filter: 'blur(8px)',
-    height: '90vh',
+    height: '92vh',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover'
@@ -15,5 +15,5 @@ const backgroundStyle = makeStyles({
 
 export const LandingBackground: React.FunctionComponent = () => {
   const classes = backgroundStyle();
-  return <div className={classes.landingBackgroundImage} />;
+  return <Box className={classes.landingBackgroundImage} />;
 };

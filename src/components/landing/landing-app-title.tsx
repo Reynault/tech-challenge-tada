@@ -1,7 +1,5 @@
-import { Button, makeStyles } from '@material-ui/core';
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { UrlContext } from '../../contexts/url-context';
+import { Box, makeStyles } from '@material-ui/core';
+import React from 'react';
 import { LandingBackground } from './landing-background';
 
 const appTitleStyle = makeStyles({
@@ -29,9 +27,9 @@ export const LandingAppTitle: React.FunctionComponent<LandingAppTitleProps> = (
 ) => {
   const classes = appTitleStyle();
   return (
-    <>
+    <React.Fragment>
       <LandingBackground />
-      <div className={classes.appTitle}>{props.children}</div>
-    </>
+      <Box className={classes.appTitle}>{props.children}</Box>
+    </React.Fragment>
   );
 };

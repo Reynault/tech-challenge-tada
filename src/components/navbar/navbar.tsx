@@ -4,7 +4,7 @@ import { AppTitle } from './app-title';
 
 export const Navbar: React.FunctionComponent = () => {
   return (
-    <AppBar position="sticky">
+    <AppBar color="primary" position="sticky">
       <Toolbar>
         <AppTitle />
       </Toolbar>

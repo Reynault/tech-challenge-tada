@@ -1,25 +1,48 @@
-import { Button } from '@material-ui/core';
-import React, { useContext } from 'react';
+import { Button, makeStyles } from '@material-ui/core';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { Routes } from '../shared/constants/routes';
+import { globalStyles } from '../shared/styles/globalStyles';
 import { LandingAppTitle } from '../components/landing/landing-app-title';
-import { UrlContext } from '../contexts/url-context';
+import Confused from '../assets/images/confused-meme.gif';
+
+export const notFoundStyle = makeStyles({
+  image: {
+    display: 'block',
+    maxWidth: '400px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '80%',
+    marginBottom: '15px'
+  }
+});
 
 export const NotFoundError: React.FunctionComponent = () => {
-  const { landing } = useContext(UrlContext);
+  const classes = globalStyles();
+  const classesNotFound = notFoundStyle();
   return (
     <LandingAppTitle>
-      <>
-        <h1>404 Error</h1>
-        <p>Uh Oh, Looks like you lost yourself.</p>
+      <React.Fragment>
+        <h1>404</h1>
+        <p>
+          Uh Oh, Looks like you lost yourself. Couldn't find the requested page
+          !
+        </p>
+        <img
+          className={classesNotFound.image}
+          src={Confused}
+          alt="loading..."
+        />
         <Button
           variant="contained"
           color="primary"
           component={Link}
-          to={landing}
+          className={classes.responsiveButton}
+          to={Routes.LANDING}
         >
           Get back home !
         </Button>
-      </>
+      </React.Fragment>
     </LandingAppTitle>
   );
 };
