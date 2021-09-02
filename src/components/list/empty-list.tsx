@@ -5,12 +5,12 @@ export interface EmptyListProps {
   label: string;
 }
 
-export const EmptyList: React.FunctionComponent<EmptyListProps> = (
-  props: EmptyListProps
-) => {
+export const EmptyList: React.FunctionComponent<EmptyListProps> = ({
+  label
+}) => {
   return (
     <Box>
-      <p>{props.label}</p>
+      <p>{label}</p>
     </Box>
   );
 };

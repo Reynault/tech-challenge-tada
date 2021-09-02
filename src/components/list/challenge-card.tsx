@@ -8,7 +8,7 @@ import {
 import React from 'react';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { parseField } from '../../shared/validators/data-validators';
-import { ButtonGroup } from '../bouton/button-group';
+import { CardGroupButton } from '../bouton/card-group-button';
 
 const challengeCardStyles = makeStyles(theme => ({
   root: {
@@ -17,28 +17,43 @@ const challengeCardStyles = makeStyles(theme => ({
     [theme.breakpoints.down('xs')]: {
       width: '90%'
     }
+  },
+  overflowedField: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
   }
 }));
 
-export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
-  props: ChallengeDto
-) => {
+export const ChallengeCard: React.FunctionComponent<ChallengeDto> = ({
+  name,
+  description,
+  difficulty
+}) => {
   const classes = challengeCardStyles();
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography variant="h5" component="h2">
-          {parseField(props.name)}
+        <Typography
+          className={classes.overflowedField}
+          variant="h5"
+          component="h2"
+        >
+          {parseField(name)}
         </Typography>
-        <Typography color="textSecondary">
-          {parseField(props.difficulty)}
+        <Typography className={classes.overflowedField} color="textSecondary">
+          {parseField(difficulty)}
         </Typography>
-        <Typography variant="body2" component="p">
-          {parseField(props.description)}
+        <Typography
+          className={classes.overflowedField}
+          variant="body2"
+          component="p"
+        >
+          {parseField(description)}
         </Typography>
       </CardContent>
       <CardActions>
-        <ButtonGroup />
+        <CardGroupButton />
       </CardActions>
     </Card>
   );

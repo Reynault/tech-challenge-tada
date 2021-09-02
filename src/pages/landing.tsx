@@ -1,9 +1,9 @@
 import { Button, makeStyles } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { LandingAppTitle } from '../components/landing/landing-app-title';
 import { Routes } from '../shared/constants/routes';
 import { globalStyles } from '../shared/styles/globalStyles';
-import { LandingAppTitle } from '../components/landing/landing-app-title';
 
 export const landingStyle = makeStyles({
   landingDescription: {
@@ -30,7 +30,7 @@ export const Landing: React.FunctionComponent = () => {
           variant="contained"
           color="primary"
           component={Link}
-          to={Routes.PLAY}
+          to={Routes.PLAY_SELECTION}
         >
           Play now !
         </Button>

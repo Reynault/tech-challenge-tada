@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer } from 'react';
-import { ChallengeDto } from '../shared/dto/challenge-dto';
+import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import {
   ChallengeActions,
   ChallengeReducer,
@@ -28,9 +28,9 @@ export interface ChallengeProviderProps {
   children: JSX.Element;
 }
 
-export const ChallengeProvider: React.FunctionComponent<ChallengeProviderProps> = (
-  props: ChallengeProviderProps
-) => {
+export const ChallengeProvider: React.FunctionComponent<ChallengeProviderProps> = ({
+  children
+}) => {
   const [state, dispatch] = useReducer(
     ChallengeReducer,
     initializeChallenges()
@@ -55,7 +55,7 @@ export const ChallengeProvider: React.FunctionComponent<ChallengeProviderProps> 
         deleteAll: deleteAll
       }}
     >
-      {props.children}
+      {children}
     </ChallengeContext.Provider>
   );
 };

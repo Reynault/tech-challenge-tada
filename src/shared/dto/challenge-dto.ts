@@ -1,6 +1,6 @@
 export interface ChallengeDto {
   name: string;
   description: string;
-  texte: string;
+  text: string;
   difficulty: number;
 }

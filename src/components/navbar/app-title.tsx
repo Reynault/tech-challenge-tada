@@ -7,7 +7,7 @@ const appTitleStyle = makeStyles({
   withDecoration: {},
   withoutDecoration: {
     textDecoration: 'none',
-    color: 'white'
+    color: 'black'
   }
 });
 

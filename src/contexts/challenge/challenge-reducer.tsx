@@ -1,6 +1,6 @@
-import { Reducer, useState } from 'react';
-import { DefaultChallenges } from '../assets/data/default-challenges';
-import { ChallengeDto } from '../shared/dto/challenge-dto';
+import { Reducer } from 'react';
+import { DefaultChallenges } from '../../assets/data/default-challenges';
+import { ChallengeDto } from '../../shared/dto/challenge-dto';
 
 export enum ChallengeActions {
   GET = 'get',

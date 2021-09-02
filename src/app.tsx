@@ -1,16 +1,26 @@
-import { ThemeProvider, createTheme, CssBaseline } from '@material-ui/core';
+import {
+  unstable_createMuiStrictModeTheme,
+  CssBaseline,
+  ThemeProvider
+} from '@material-ui/core';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Navbar } from './components/navbar/navbar';
-import { ChallengeProvider } from './contexts/challenge-context';
+import { ChallengeProvider } from './contexts/challenge/challenge-context';
 import { NotFoundError } from './pages/404';
 import { Landing } from './pages/landing';
-import { Play } from './pages/play';
+import { PlaySelection } from './pages/play-selection';
 import { Routes } from './shared/constants/routes';
 
-const theme = createTheme({
+const theme = unstable_createMuiStrictModeTheme({
   palette: {
-    type: 'dark'
+    type: 'dark',
+    primary: {
+      main: '#90caf9'
+    },
+    secondary: {
+      main: '#f48fb1'
+    }
   }
 });
 
@@ -24,9 +34,9 @@ export const App: React.FunctionComponent = () => {
           <Route exact path={Routes.LANDING}>
             <Landing />
           </Route>
-          <Route path={Routes.PLAY}>
+          <Route exact path={Routes.PLAY_SELECTION}>
             <ChallengeProvider>
-              <Play />
+              <PlaySelection />
             </ChallengeProvider>
           </Route>
           <Route component={NotFoundError} />

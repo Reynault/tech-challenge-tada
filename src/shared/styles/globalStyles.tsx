@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 
 export const globalStyles = makeStyles(theme => ({
-  pageTitle: {
+  centeredTitle: {
     textAlign: 'center'
   },
   pageBody: {
@@ -10,6 +10,12 @@ export const globalStyles = makeStyles(theme => ({
   responsiveButton: {
     [theme.breakpoints.down('xs')]: {
       width: '90%'
+    }
+  },
+  spacedForm: {
+    '& > *': {
+      width: '100%',
+      marginBottom: '15px'
     }
   }
 }));
