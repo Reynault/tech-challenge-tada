@@ -1,4 +1,11 @@
-import { Box, Button, Container, Fab, makeStyles } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Container,
+  Fab,
+  makeStyles,
+  Typography
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useCallback, useContext } from 'react';
@@ -28,8 +35,8 @@ export const PlaySelection: React.FunctionComponent = () => {
   const { dispatch } = useContext(ChallengesContext);
   const { state, isChallengesEmpty } = useContext(ChallengesContext);
   const { showModal } = useContext(DialogContext);
-  const classesPlay = playStyle();
-  const classes = globalStyles();
+  const { fav, favGroup } = playStyle();
+  const { pageBody, centeredElement } = globalStyles();
   const populate = useCallback(() => {
     dispatch({ type: ChallengeActionType.POPULATE });
   }, [dispatch]);
@@ -41,30 +48,30 @@ export const PlaySelection: React.FunctionComponent = () => {
   }, [showModal]);
 
   return (
-    <Container className={classes.pageBody}>
-      <Box>
-        <h1 className={classes.centeredElement}>Select a challenge !</h1>
-      </Box>
-      <Box>
-        {!isChallengesEmpty(state) ? (
-          <CardList
-            {...{
-              dataToDisplay: state,
-              howToDisplay: ChallengeCard
-            }}
-          />
-        ) : (
-          <Box className={classes.centeredElement}>
-            <p>You don't have any challenges.</p>
-            <Button color="primary" variant="contained" onClick={populate}>
-              Populate with default values
-            </Button>
-          </Box>
-        )}
-      </Box>
-      <Box className={classesPlay.favGroup}>
+    <Container className={pageBody}>
+      <Typography variant={`h3`} className={centeredElement}>
+        Select a challenge !
+      </Typography>
+      {!isChallengesEmpty(state) ? (
+        <CardList
+          {...{
+            dataToDisplay: state,
+            howToDisplay: ChallengeCard
+          }}
+        />
+      ) : (
+        <Box className={centeredElement}>
+          <Typography variant={`h6`} className={centeredElement}>
+            You don't have any challenges.
+          </Typography>
+          <Button color="primary" variant="contained" onClick={populate}>
+            Populate with default values
+          </Button>
+        </Box>
+      )}
+      <Box className={favGroup}>
         <Fab
-          className={classesPlay.fav}
+          className={fav}
           color="primary"
           aria-label="add"
           onClick={openCreateModal}
@@ -73,7 +80,7 @@ export const PlaySelection: React.FunctionComponent = () => {
         </Fab>
         <Fab
           onClick={openDeleteModal}
-          className={classesPlay.fav}
+          className={fav}
           color="secondary"
           aria-label="remove"
         >

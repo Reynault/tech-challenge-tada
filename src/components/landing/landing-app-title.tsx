@@ -25,11 +25,11 @@ export interface LandingAppTitleProps {
 export const LandingAppTitle: React.FunctionComponent<LandingAppTitleProps> = ({
   children
 }) => {
-  const classes = appTitleStyle();
+  const { appTitle } = appTitleStyle();
   return (
     <React.Fragment>
       <LandingBackground />
-      <Box className={classes.appTitle}>{children}</Box>
+      <Box className={appTitle}>{children}</Box>
     </React.Fragment>
   );
 };

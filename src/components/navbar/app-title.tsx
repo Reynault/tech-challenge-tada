@@ -13,17 +13,15 @@ const appTitleStyle = makeStyles({
 
 export const AppTitle: React.FunctionComponent = () => {
   const [showUnderline, setShowUnderline] = useState(false);
-  const classes = appTitleStyle();
+  const { withoutDecoration, withDecoration } = appTitleStyle();
   return (
     <Typography
       component={Link}
       to={Routes.LANDING}
-      variant="h6"
+      variant="h5"
       onMouseEnter={() => setShowUnderline(true)}
       onMouseLeave={() => setShowUnderline(false)}
-      className={
-        showUnderline ? classes.withDecoration : classes.withoutDecoration
-      }
+      className={showUnderline ? withDecoration : withoutDecoration}
     >
       Type Mania
     </Typography>

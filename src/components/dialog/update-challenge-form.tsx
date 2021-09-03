@@ -24,7 +24,12 @@ export interface UpdateChallengeFormProps {
 export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormProps> = ({
   challenge
 }) => {
-  const classes = globalStyles();
+  const {
+    centeredElement,
+    overflowedField,
+    spacedInput,
+    dialogSelectedElementTitle
+  } = globalStyles();
 
   const { dispatch } = useContext(ChallengesContext);
   const { hideModal } = useContext(DialogContext);
@@ -67,11 +72,9 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
 
   return (
     <form onSubmit={submitForm}>
-      <DialogTitle className={classes.centeredElement} id="alert-dialog-title">
+      <DialogTitle className={centeredElement} id="alert-dialog-title">
         {!!challenge ? (
-          <span
-            className={`${classes.overflowedField} ${classes.dialogSelectedElementTitle}`}
-          >
+          <span className={`${overflowedField} ${dialogSelectedElementTitle}`}>
             Update {challenge.name}
           </span>
         ) : (
@@ -81,7 +84,7 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
       <DialogContent>
         <TextField
           disabled={!!challenge}
-          className={classes.spacedInput}
+          className={spacedInput}
           id="name"
           required
           label="Name"
@@ -89,7 +92,7 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
           onChange={event => setName(event.target.value)}
         />
         <TextField
-          className={classes.spacedInput}
+          className={spacedInput}
           id="description"
           required
           label="Description"
@@ -97,7 +100,7 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
           onChange={event => setDescription(event.target.value)}
         />
         <TextField
-          className={classes.spacedInput}
+          className={spacedInput}
           id="text"
           required
           label="Text"
@@ -107,7 +110,7 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
           onChange={event => setText(event.target.value)}
           variant="filled"
         />
-        <FormControl className={classes.spacedInput}>
+        <FormControl className={spacedInput}>
           <InputLabel id="difficulty">Difficulty</InputLabel>
           <Select
             id="difficulty"

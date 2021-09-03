@@ -27,7 +27,7 @@ export interface CardListProps<Datatype> {
 export const CardList: React.FunctionComponent<CardListProps<any>> = (
   props: CardListProps<any>
 ) => {
-  const classes = cardListStyle();
+  const { list } = cardListStyle();
   const rows: JSX.Element[] = [];
   // callback to build dynamic elements in the list
   const buildElementList = useCallback(() => {
@@ -38,7 +38,7 @@ export const CardList: React.FunctionComponent<CardListProps<any>> = (
   buildElementList();
   return (
     <React.Fragment>
-      <Box className={classes.list}>{rows}</Box>
+      <Box className={list}>{rows}</Box>
     </React.Fragment>
   );
 };

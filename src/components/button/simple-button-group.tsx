@@ -26,6 +26,6 @@ export interface SimpleGroupButtonProps {
 export const SimpleButtonGroup: React.FunctionComponent<SimpleGroupButtonProps> = ({
   children
 }) => {
-  const classes = buttonGroupStyle();
-  return <Box className={classes.list}>{children}</Box>;
+  const { list } = buttonGroupStyle();
+  return <Box className={list}>{children}</Box>;
 };

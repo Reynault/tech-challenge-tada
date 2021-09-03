@@ -1,4 +1,4 @@
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Confused from '../assets/images/confused-meme.gif';
@@ -18,26 +18,22 @@ export const notFoundStyle = makeStyles({
 });
 
 export const NotFoundError: React.FunctionComponent = () => {
-  const classes = globalStyles();
-  const classesNotFound = notFoundStyle();
+  const { responsiveButton } = globalStyles();
+  const { image } = notFoundStyle();
   return (
     <LandingAppTitle>
       <React.Fragment>
-        <h1>404</h1>
-        <p>
+        <Typography variant="h2">404</Typography>
+        <Typography variant="subtitle1">
           Uh Oh, Looks like you lost yourself. Couldn't find the requested page
           !
-        </p>
-        <img
-          className={classesNotFound.image}
-          src={Confused}
-          alt="loading..."
-        />
+        </Typography>
+        <img className={image} src={Confused} alt="loading..." />
         <Button
           variant="contained"
           color="primary"
           component={Link}
-          className={classes.responsiveButton}
+          className={responsiveButton}
           to={Routes.LANDING}
         >
           Get back home !

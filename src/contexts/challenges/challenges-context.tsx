@@ -7,6 +7,7 @@ export interface ChallengeContextProps {
   state: ChallengeDto[];
   dispatch: Dispatch<ChallengeAction>;
   isChallengesEmpty: (challenges: ChallengeDto[]) => boolean;
+  getOne: (challenges: ChallengeDto[], id: string) => ChallengeDto;
 }
 
 export const ChallengesContext: React.Context<ChallengeContextProps> = React.createContext<
@@ -14,7 +15,8 @@ export const ChallengesContext: React.Context<ChallengeContextProps> = React.cre
 >({
   state: null,
   dispatch: null,
-  isChallengesEmpty: null
+  isChallengesEmpty: null,
+  getOne: null
 });
 
 // Specific provider definition as a component
@@ -36,12 +38,20 @@ export const ChallengeProvider: React.FunctionComponent<ChallengeProviderProps> 
     []
   );
 
+  const getOne = useCallback(
+    (challenges: ChallengeDto[], id: string): ChallengeDto => {
+      return challenges.find((c: ChallengeDto) => c.name === id);
+    },
+    []
+  );
+
   return (
     <ChallengesContext.Provider
       value={{
         state,
         dispatch,
-        isChallengesEmpty
+        isChallengesEmpty,
+        getOne
       }}
     >
       {children}

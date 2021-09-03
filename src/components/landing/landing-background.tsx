@@ -15,6 +15,6 @@ const backgroundStyle = makeStyles({
 });
 
 export const LandingBackground: React.FunctionComponent = () => {
-  const classes = backgroundStyle();
-  return <Box className={classes.landingBackgroundImage} />;
+  const { landingBackgroundImage } = backgroundStyle();
+  return <Box className={landingBackgroundImage} />;
 };

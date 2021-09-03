@@ -15,7 +15,7 @@ import { globalStyles } from '../../shared/styles/globalStyles';
 import { parseField } from '../../shared/validators/data-validators';
 import { DeleteChallengeForm } from '../dialog/delete-challenge-form';
 import { UpdateChallengeForm } from '../dialog/update-challenge-form';
-import { Difficulty } from '../difficulty';
+import { Stars } from '../stars';
 
 const challengeCardStyles = makeStyles(theme => ({
   root: {
@@ -42,8 +42,8 @@ const challengeCardStyles = makeStyles(theme => ({
 export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
   challenge: ChallengeDto
 ) => {
-  const localClasses = challengeCardStyles();
-  const globalClasses = globalStyles();
+  const { root, cardButtons } = challengeCardStyles();
+  const { overflowedField, thirdColor } = globalStyles();
   const { showModal } = useContext(DialogContext);
   const openUpdateModal = useCallback(() => {
     showModal(<UpdateChallengeForm {...{ challenge }} />);
@@ -53,30 +53,22 @@ export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
   }, [showModal, challenge]);
 
   return (
-    <Card className={localClasses.root}>
+    <Card className={root}>
       <CardContent>
-        <Typography
-          className={globalClasses.overflowedField}
-          variant="h5"
-          component="h2"
-        >
+        <Typography className={overflowedField} variant="h5">
           {parseField(challenge.name)}
         </Typography>
-        <Difficulty {...{ difficulty: challenge.difficulty }} />
-        <Typography
-          className={globalClasses.overflowedField}
-          variant="body2"
-          component="p"
-        >
+        <Stars {...{ value: challenge.difficulty }} />
+        <Typography className={overflowedField} variant="body1">
           {parseField(challenge.description)}
         </Typography>
       </CardContent>
-      <CardActions className={localClasses.cardButtons}>
+      <CardActions className={cardButtons}>
         <Button
           variant="contained"
-          className={globalClasses.thirdColor}
+          className={thirdColor}
           component={Link}
-          to={`${Routes.PLAY}/${challenge.name}`}
+          to={`${Routes.PLAY_SELECTION}/${challenge.name}`}
         >
           Play
         </Button>
