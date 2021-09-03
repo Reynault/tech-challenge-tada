@@ -39,7 +39,7 @@ export const App: React.FunctionComponent = () => {
                 <Route exact path={Routes.LANDING}>
                   <Landing />
                 </Route>
-                <Route exact path={Routes.PLAY_SELECTION}>
+                <Route exact path={Routes.PLAY}>
                   <PlaySelection />
                 </Route>
                 <Route component={NotFoundError} />

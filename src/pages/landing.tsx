@@ -30,7 +30,7 @@ export const Landing: React.FunctionComponent = () => {
           variant="contained"
           color="primary"
           component={Link}
-          to={Routes.PLAY_SELECTION}
+          to={Routes.PLAY}
         >
           Play now !
         </Button>

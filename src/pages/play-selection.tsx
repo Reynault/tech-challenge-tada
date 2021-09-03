@@ -2,8 +2,8 @@ import { Box, Button, Container, Fab, makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useCallback, useContext } from 'react';
-import { DeleteChallengeForm } from '../components/form/delete-challenge-form';
-import { ViewChallengeForm } from '../components/form/view-challenge-form';
+import { DeleteChallengeForm } from '../components/dialog/delete-challenge-form';
+import { UpdateChallengeForm } from '../components/dialog/update-challenge-form';
 import { CardList } from '../components/list/card-list';
 import { ChallengeCard } from '../components/list/challenge-card';
 import { ChallengesContext } from '../contexts/challenges/challenges-context';
@@ -34,7 +34,7 @@ export const PlaySelection: React.FunctionComponent = () => {
     dispatch({ type: ChallengeActionType.POPULATE });
   }, [dispatch]);
   const openCreateModal = useCallback(() => {
-    showModal(<ViewChallengeForm />);
+    showModal(<UpdateChallengeForm />);
   }, [showModal]);
   const openDeleteModal = useCallback(() => {
     showModal(<DeleteChallengeForm />);

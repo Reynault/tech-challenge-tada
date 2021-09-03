@@ -13,7 +13,11 @@ export interface DeleteChallengeFormProps {
 export const DeleteChallengeForm: React.FunctionComponent<DeleteChallengeFormProps> = ({
   challenge
 }) => {
-  const classes = globalStyles();
+  const {
+    centeredElement,
+    overflowedField,
+    dialogSelectedElementTitle
+  } = globalStyles();
 
   const { dispatch } = useContext(ChallengesContext);
   const { hideModal } = useContext(DialogContext);
@@ -29,12 +33,10 @@ export const DeleteChallengeForm: React.FunctionComponent<DeleteChallengeFormPro
 
   return (
     <React.Fragment>
-      <DialogTitle className={classes.centeredElement} id="alert-dialog-title">
+      <DialogTitle className={centeredElement} id="alert-dialog-title">
         Do you really want to delete{' '}
         {!!challenge ? (
-          <span
-            className={`${classes.overflowedField} ${classes.dialogSelectedElementTitle}`}
-          >
+          <span className={`${overflowedField} ${dialogSelectedElementTitle}`}>
             {challenge.name}
           </span>
         ) : (

@@ -7,12 +7,15 @@ import {
   Typography
 } from '@material-ui/core';
 import React, { useCallback, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { DialogContext } from '../../contexts/dialog-context';
+import { Routes } from '../../shared/constants/routes';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { globalStyles } from '../../shared/styles/globalStyles';
 import { parseField } from '../../shared/validators/data-validators';
-import { DeleteChallengeForm } from '../form/delete-challenge-form';
-import { ViewChallengeForm } from '../form/view-challenge-form';
+import { DeleteChallengeForm } from '../dialog/delete-challenge-form';
+import { UpdateChallengeForm } from '../dialog/update-challenge-form';
+import { Difficulty } from '../difficulty';
 
 const challengeCardStyles = makeStyles(theme => ({
   root: {
@@ -23,15 +26,11 @@ const challengeCardStyles = makeStyles(theme => ({
     }
   },
   cardButtons: {
-    display: 'flex',
-    flexWrap: 'wrap',
     justifyContent: 'center',
-    gap: '5px',
-    '& *': {
-      flex: '1 1 25%'
-    },
     [theme.breakpoints.down('xs')]: {
       flexDirection: 'row !important',
+      flexWrap: 'wrap',
+      gap: '5px',
       '& *': {
         flex: '1 1 100%',
         margin: '0px !important'
@@ -47,7 +46,7 @@ export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
   const globalClasses = globalStyles();
   const { showModal } = useContext(DialogContext);
   const openUpdateModal = useCallback(() => {
-    showModal(<ViewChallengeForm {...{ challenge }} />);
+    showModal(<UpdateChallengeForm {...{ challenge }} />);
   }, [showModal, challenge]);
   const openDeleteModal = useCallback(() => {
     showModal(<DeleteChallengeForm {...{ challenge }} />);
@@ -63,12 +62,7 @@ export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
         >
           {parseField(challenge.name)}
         </Typography>
-        <Typography
-          className={globalClasses.overflowedField}
-          color="textSecondary"
-        >
-          {parseField(challenge.difficulty)}
-        </Typography>
+        <Difficulty {...{ difficulty: challenge.difficulty }} />
         <Typography
           className={globalClasses.overflowedField}
           variant="body2"
@@ -78,8 +72,13 @@ export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
         </Typography>
       </CardContent>
       <CardActions className={localClasses.cardButtons}>
-        <Button variant="contained" className={globalClasses.thirdColor}>
-          View
+        <Button
+          variant="contained"
+          className={globalClasses.thirdColor}
+          component={Link}
+          to={`${Routes.PLAY}/${challenge.name}`}
+        >
+          Play
         </Button>
         <Button onClick={openUpdateModal} color="primary" variant="contained">
           Update

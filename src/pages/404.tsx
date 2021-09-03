@@ -9,7 +9,7 @@ import { globalStyles } from '../shared/styles/globalStyles';
 export const notFoundStyle = makeStyles({
   image: {
     display: 'block',
-    maxWidth: '40%',
+    maxWidth: '30%',
     marginLeft: 'auto',
     marginRight: 'auto',
     width: '80%',

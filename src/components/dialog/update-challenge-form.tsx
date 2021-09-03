@@ -3,6 +3,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField
 } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
@@ -13,11 +17,11 @@ import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { globalStyles } from '../../shared/styles/globalStyles';
 import { parseField } from '../../shared/validators/data-validators';
 
-export interface ViewChallengeFormProps {
+export interface UpdateChallengeFormProps {
   challenge?: ChallengeDto;
 }
 
-export const ViewChallengeForm: React.FunctionComponent<ViewChallengeFormProps> = ({
+export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormProps> = ({
   challenge
 }) => {
   const classes = globalStyles();
@@ -103,15 +107,22 @@ export const ViewChallengeForm: React.FunctionComponent<ViewChallengeFormProps> 
           onChange={event => setText(event.target.value)}
           variant="filled"
         />
-        <TextField
-          className={classes.spacedInput}
-          id="difficulty"
-          required
-          type="number"
-          label="Difficulty"
-          value={difficulty}
-          onChange={event => setDifficulty(event.target.value)}
-        />
+        <FormControl className={classes.spacedInput}>
+          <InputLabel id="difficulty">Difficulty</InputLabel>
+          <Select
+            id="difficulty"
+            labelId="difficulty"
+            required
+            value={difficulty}
+            onChange={event => setDifficulty(event.target.value)}
+          >
+            <MenuItem value={1}>Super easy</MenuItem>
+            <MenuItem value={2}>Easy</MenuItem>
+            <MenuItem value={3}>Medium</MenuItem>
+            <MenuItem value={4}>Hard</MenuItem>
+            <MenuItem value={5}>Super Hard</MenuItem>
+          </Select>
+        </FormControl>
       </DialogContent>
       <DialogActions>
         <Button onClick={hideModal} color="secondary" variant="contained">
