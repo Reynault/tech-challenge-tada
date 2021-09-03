@@ -1,13 +1,13 @@
 import { Box, Container, Fab, makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { DeleteChallengeForm } from '../components/form/delete-challenge-form';
 import { InsertChallengeForm } from '../components/form/insert-challenge-form';
 import { CardList } from '../components/list/card-list';
 import { ChallengeCard } from '../components/list/challenge-card';
-import { EmptyList } from '../components/list/empty-list';
-import { ChallengeContext } from '../contexts/challenge/challenge-context';
+import { ChallengesContext } from '../contexts/challenges/challenges-context';
+import { DialogContext } from '../contexts/dialog-context';
 import { globalStyles } from '../shared/styles/globalStyles';
 
 const playStyle = makeStyles({
@@ -24,17 +24,16 @@ const playStyle = makeStyles({
 });
 
 export const PlaySelection: React.FunctionComponent = () => {
-  const { challenges } = useContext(ChallengeContext);
+  const { state, isChallengesEmpty } = useContext(ChallengesContext);
+  const { showModal } = useContext(DialogContext);
   const classesPlay = playStyle();
   const classes = globalStyles();
-  const [openCreate, setOpenCreate] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
   const openCreateModal = useCallback(() => {
-    setOpenCreate(true);
-  }, [setOpenCreate]);
+    showModal(<InsertChallengeForm />);
+  }, [showModal]);
   const openDeleteModal = useCallback(() => {
-    setOpenDelete(true);
-  }, [setOpenDelete]);
+    showModal(<DeleteChallengeForm />);
+  }, [showModal]);
 
   return (
     <Container className={classes.pageBody}>
@@ -42,15 +41,19 @@ export const PlaySelection: React.FunctionComponent = () => {
         <h1 className={classes.centeredTitle}>Select a challenge !</h1>
       </Box>
       <Box>
-        {!!challenges ? (
+        {!isChallengesEmpty(state) ? (
           <CardList
             {...{
-              dataToDisplay: challenges,
+              dataToDisplay: state,
               howToDisplay: ChallengeCard
             }}
           />
         ) : (
-          <EmptyList label={"You don't have any challenge."} />
+          <Box>
+            <p className={classes.centeredTitle}>
+              You don't have any challenges.
+            </p>
+          </Box>
         )}
       </Box>
       <Box className={classesPlay.favGroup}>
@@ -71,8 +74,6 @@ export const PlaySelection: React.FunctionComponent = () => {
           <DeleteIcon />
         </Fab>
       </Box>
-      <InsertChallengeForm {...{ open: openCreate, setOpen: setOpenCreate }} />
-      <DeleteChallengeForm {...{ open: openDelete, setOpen: setOpenDelete }} />
     </Container>
   );
 };

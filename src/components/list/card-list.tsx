@@ -2,7 +2,7 @@ import { Box, Button, makeStyles } from '@material-ui/core';
 import AppsIcon from '@material-ui/icons/Apps';
 import ReorderIcon from '@material-ui/icons/Reorder';
 import React, { useCallback, useState } from 'react';
-import { SimpleGroupButton } from '../bouton/simple-group-button';
+import { SimpleButtonGroup } from '../button/simple-button-group';
 
 const cardListStyle = makeStyles(theme => ({
   changeDisplayButtons: {
@@ -53,19 +53,15 @@ export const CardList: React.FunctionComponent<CardListProps<any>> = (
   // callback to build dynamic elements in the list
   const buildElementList = useCallback(() => {
     for (let i = 0; i < props.dataToDisplay.length; i++) {
-      rows.push(<props.howToDisplay key={i} {...props.dataToDisplay[i]} />);
       rows.push(
-        <props.howToDisplay
-          key={i + props.dataToDisplay.length}
-          {...props.dataToDisplay[i]}
-        />
+        <props.howToDisplay key={i} id={i} {...props.dataToDisplay[i]} />
       );
     }
   }, [rows]);
   buildElementList();
   return (
     <React.Fragment>
-      <SimpleGroupButton>
+      <SimpleButtonGroup>
         <React.Fragment>
           <Button
             className={classes.changeDisplayButtons}
@@ -82,7 +78,7 @@ export const CardList: React.FunctionComponent<CardListProps<any>> = (
             <ReorderIcon />
           </Button>
         </React.Fragment>
-      </SimpleGroupButton>
+      </SimpleButtonGroup>
       <Box
         className={`${classes.list} ${
           displayAsList ? classes.classicList : classes.shrankList

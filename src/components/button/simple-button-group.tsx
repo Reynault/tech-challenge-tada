@@ -23,7 +23,7 @@ export interface SimpleGroupButtonProps {
   children: JSX.Element;
 }
 
-export const SimpleGroupButton: React.FunctionComponent<SimpleGroupButtonProps> = ({
+export const SimpleButtonGroup: React.FunctionComponent<SimpleGroupButtonProps> = ({
   children
 }) => {
   const classes = buttonGroupStyle();

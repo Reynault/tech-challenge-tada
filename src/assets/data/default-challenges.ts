@@ -1,4 +1,6 @@
-export const DefaultChallenges = [
+import { ChallengeDto } from '../../shared/dto/challenge-dto';
+
+export const DefaultChallenges: ChallengeDto[] = [
   {
     name: 'challenge1',
     description: 'First paragraph of lorem ispum.',

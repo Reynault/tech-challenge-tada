@@ -1,12 +1,14 @@
 import {
-  unstable_createMuiStrictModeTheme,
   CssBaseline,
-  ThemeProvider
+  ThemeProvider,
+  unstable_createMuiStrictModeTheme
 } from '@material-ui/core';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Navbar } from './components/navbar/navbar';
-import { ChallengeProvider } from './contexts/challenge/challenge-context';
+import { ChallengeProvider } from './contexts/challenges/challenges-context';
+import { FormProvider } from './contexts/form-context';
+import { ModalProvider } from './contexts/dialog-context';
 import { NotFoundError } from './pages/404';
 import { Landing } from './pages/landing';
 import { PlaySelection } from './pages/play-selection';
@@ -28,20 +30,24 @@ export const App: React.FunctionComponent = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route exact path={Routes.LANDING}>
-            <Landing />
-          </Route>
-          <Route exact path={Routes.PLAY_SELECTION}>
-            <ChallengeProvider>
-              <PlaySelection />
-            </ChallengeProvider>
-          </Route>
-          <Route component={NotFoundError} />
-        </Switch>
-      </Router>
+      <ChallengeProvider>
+        <ModalProvider>
+          <FormProvider>
+            <Router>
+              <Navbar />
+              <Switch>
+                <Route exact path={Routes.LANDING}>
+                  <Landing />
+                </Route>
+                <Route exact path={Routes.PLAY_SELECTION}>
+                  <PlaySelection />
+                </Route>
+                <Route component={NotFoundError} />
+              </Switch>
+            </Router>
+          </FormProvider>
+        </ModalProvider>
+      </ChallengeProvider>
     </ThemeProvider>
   );
 };

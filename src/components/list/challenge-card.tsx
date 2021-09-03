@@ -1,14 +1,18 @@
 import {
+  Button,
   Card,
   CardActions,
   CardContent,
   makeStyles,
   Typography
 } from '@material-ui/core';
-import React from 'react';
+import React, { useCallback, useContext } from 'react';
+import { DialogContext } from '../../contexts/dialog-context';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
+import { globalStyles } from '../../shared/styles/globalStyles';
 import { parseField } from '../../shared/validators/data-validators';
-import { CardGroupButton } from '../bouton/card-group-button';
+import { DeleteChallengeForm } from '../form/delete-challenge-form';
+import { InsertChallengeForm } from '../form/insert-challenge-form';
 
 const challengeCardStyles = makeStyles(theme => ({
   root: {
@@ -17,43 +21,54 @@ const challengeCardStyles = makeStyles(theme => ({
     [theme.breakpoints.down('xs')]: {
       width: '90%'
     }
-  },
-  overflowedField: {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
   }
 }));
 
-export const ChallengeCard: React.FunctionComponent<ChallengeDto> = ({
-  name,
-  description,
-  difficulty
-}) => {
-  const classes = challengeCardStyles();
+export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
+  challenge: ChallengeDto
+) => {
+  const localClasses = challengeCardStyles();
+  const globalClasses = globalStyles();
+  const { showModal } = useContext(DialogContext);
+  const openUpdateModal = useCallback(() => {
+    showModal(<InsertChallengeForm {...{ challenge }} />);
+  }, [showModal]);
+  const openDeleteModal = useCallback(() => {
+    showModal(<DeleteChallengeForm {...{ challenge }} />);
+  }, [showModal]);
+
   return (
-    <Card className={classes.root}>
+    <Card className={localClasses.root}>
       <CardContent>
         <Typography
-          className={classes.overflowedField}
+          className={globalClasses.overflowedField}
           variant="h5"
           component="h2"
         >
-          {parseField(name)}
-        </Typography>
-        <Typography className={classes.overflowedField} color="textSecondary">
-          {parseField(difficulty)}
+          {parseField(challenge.name)}
         </Typography>
         <Typography
-          className={classes.overflowedField}
+          className={globalClasses.overflowedField}
+          color="textSecondary"
+        >
+          {parseField(challenge.difficulty)}
+        </Typography>
+        <Typography
+          className={globalClasses.overflowedField}
           variant="body2"
           component="p"
         >
-          {parseField(description)}
+          {parseField(challenge.description)}
         </Typography>
       </CardContent>
       <CardActions>
-        <CardGroupButton />
+        <Button variant="contained">Play</Button>
+        <Button onClick={openUpdateModal} color="primary" variant="contained">
+          Update
+        </Button>
+        <Button onClick={openDeleteModal} color="secondary" variant="contained">
+          Delete
+        </Button>
       </CardActions>
     </Card>
   );
