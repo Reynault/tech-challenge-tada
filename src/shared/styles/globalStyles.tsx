@@ -17,7 +17,7 @@ export const globalStyles = makeStyles(theme => ({
     marginBottom: '15px'
   },
   thirdColor: {
-    color: '#4caf50'
+    backgroundColor: '#4caf50'
   },
   overflowedField: {
     overflow: 'hidden',

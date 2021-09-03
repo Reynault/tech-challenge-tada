@@ -13,11 +13,11 @@ import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { globalStyles } from '../../shared/styles/globalStyles';
 import { parseField } from '../../shared/validators/data-validators';
 
-export interface InsertChallengeFormProps {
+export interface ViewChallengeFormProps {
   challenge?: ChallengeDto;
 }
 
-export const InsertChallengeForm: React.FunctionComponent<InsertChallengeFormProps> = ({
+export const ViewChallengeForm: React.FunctionComponent<ViewChallengeFormProps> = ({
   challenge
 }) => {
   const classes = globalStyles();

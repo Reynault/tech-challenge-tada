@@ -7,7 +7,7 @@ import { globalStyles } from '../shared/styles/globalStyles';
 
 export const landingStyle = makeStyles({
   landingDescription: {
-    maxWidth: '600px',
+    maxWidth: '80%',
     marginLeft: 'auto',
     marginRight: 'auto'
   }
