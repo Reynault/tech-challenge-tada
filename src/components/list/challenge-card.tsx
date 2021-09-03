@@ -32,10 +32,10 @@ export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
   const { showModal } = useContext(DialogContext);
   const openUpdateModal = useCallback(() => {
     showModal(<InsertChallengeForm {...{ challenge }} />);
-  }, [showModal]);
+  }, [showModal, challenge]);
   const openDeleteModal = useCallback(() => {
     showModal(<DeleteChallengeForm {...{ challenge }} />);
-  }, [showModal]);
+  }, [showModal, challenge]);
 
   return (
     <Card className={localClasses.root}>

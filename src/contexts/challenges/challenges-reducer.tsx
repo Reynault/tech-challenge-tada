@@ -37,8 +37,12 @@ const put = (
   payload: ChallengeDto,
   old: ChallengeDto
 ): ChallengeDto[] => {
-  deleteOne(state, old);
-  state.push(payload);
+  const indexOfOldChallenge = state.findIndex(
+    (challenge: ChallengeDto) => challenge.name === old.name
+  );
+  if (indexOfOldChallenge >= 0) {
+    state[indexOfOldChallenge] = payload;
+  }
   return state;
 };
 

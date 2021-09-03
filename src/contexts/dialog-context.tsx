@@ -40,6 +40,7 @@ export const ModalProvider: React.FunctionComponent<ModalProviderProps> = ({
     [changeContent, setOpen]
   );
   const hideModal = useCallback(() => {
+    changeContent(<></>);
     setOpen(false);
   }, [setOpen]);
   return (

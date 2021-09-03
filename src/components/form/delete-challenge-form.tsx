@@ -1,11 +1,10 @@
-import { DialogActions, DialogTitle } from '@material-ui/core';
+import { Button, DialogActions, DialogTitle } from '@material-ui/core';
 import React, { useCallback, useContext } from 'react';
 import { ChallengesContext } from '../../contexts/challenges/challenges-context';
 import { ChallengeActionType } from '../../contexts/challenges/challenges-reducer';
 import { DialogContext } from '../../contexts/dialog-context';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { globalStyles } from '../../shared/styles/globalStyles';
-import { DialogButtonGroup } from '../button/dialog-button-group';
 
 export interface DeleteChallengeFormProps {
   challenge?: ChallengeDto;
@@ -30,7 +29,7 @@ export const DeleteChallengeForm: React.FunctionComponent<DeleteChallengeFormPro
 
   return (
     <React.Fragment>
-      <DialogTitle className={classes.centeredTitle} id="alert-dialog-title">
+      <DialogTitle className={classes.centeredElement} id="alert-dialog-title">
         Do you really want to delete{' '}
         {!!challenge ? (
           <span
@@ -44,10 +43,17 @@ export const DeleteChallengeForm: React.FunctionComponent<DeleteChallengeFormPro
         ?
       </DialogTitle>
       <DialogActions>
-        <DialogButtonGroup
-          submitProcedure={deleteProcedure}
-          cancelProcedure={hideModal}
-        />
+        <Button onClick={hideModal} color="secondary" variant="contained">
+          Cancel
+        </Button>
+        <Button
+          onClick={deleteProcedure}
+          type="submit"
+          color="primary"
+          variant="contained"
+        >
+          Submit
+        </Button>
       </DialogActions>
     </React.Fragment>
   );
