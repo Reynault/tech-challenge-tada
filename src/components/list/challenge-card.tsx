@@ -21,6 +21,7 @@ const challengeCardStyles = makeStyles(theme => ({
   root: {
     textAlign: 'center',
     minWidth: '250px',
+    animation: 'fadeInCard 0.5s',
     [theme.breakpoints.down('xs')]: {
       width: '90%'
     }

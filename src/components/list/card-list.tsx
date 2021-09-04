@@ -31,7 +31,8 @@ export const CardList: React.FunctionComponent<CardListProps<any>> = (
   const rows: JSX.Element[] = [];
   // callback to build dynamic elements in the list
   const buildElementList = useCallback(() => {
-    for (let i = 0; i < props.dataToDisplay.length; i++) {
+    const l = props.dataToDisplay.length;
+    for (let i = 0; i < l; i++) {
       rows.push(<props.howToDisplay key={i} {...props.dataToDisplay[i]} />);
     }
   }, [rows]);

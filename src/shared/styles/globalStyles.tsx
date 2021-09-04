@@ -2,10 +2,19 @@ import { makeStyles } from '@material-ui/core';
 
 export const globalStyles = makeStyles(theme => ({
   '@global': {
-    '@keyframes fadeIn': {
+    '@keyframes fadeInTitle': {
       '0%': {
         opacity: '0',
         transform: 'translate(-50%)'
+      },
+      '100%': {
+        opacity: '1'
+      }
+    },
+    '@keyframes fadeInCard': {
+      '0%': {
+        opacity: '0',
+        transform: 'translate(0, 20%)'
       },
       '100%': {
         opacity: '1'
