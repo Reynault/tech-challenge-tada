@@ -14,7 +14,9 @@ const appTitleStyle = makeStyles({
     zIndex: 2,
     width: '100%',
     paddingBottom: '20px',
-    textAlign: 'center'
+    textAlign: 'center',
+    boxShadow: '0px 0px 15px black',
+    animation: 'fadeIn 1s'
   }
 });
 

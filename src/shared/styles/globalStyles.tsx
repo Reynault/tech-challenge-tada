@@ -1,6 +1,25 @@
 import { makeStyles } from '@material-ui/core';
 
 export const globalStyles = makeStyles(theme => ({
+  '@global': {
+    '@keyframes fadeIn': {
+      '0%': {
+        opacity: '0',
+        transform: 'translate(-50%)'
+      },
+      '100%': {
+        opacity: '1'
+      }
+    },
+    '@keyframes blur': {
+      '0%': {
+        filter: 'blur(4px)'
+      },
+      '100%': {
+        filter: 'blur(0px)'
+      }
+    }
+  },
   centeredElement: {
     textAlign: 'center'
   },

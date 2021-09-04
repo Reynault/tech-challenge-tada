@@ -24,8 +24,12 @@ const playStyle = makeStyles(theme => ({
     padding: '1%'
   },
   blurred: {
-    color: 'transparent',
-    textShadow: '0 0 5px rgba(255, 255, 255, 0.75)'
+    animationDirection: 'reverse',
+    animation: 'blur 0.5s',
+    filter: 'blur(4px)'
+  },
+  notBlurred: {
+    animation: 'blur 0.5s'
   }
 }));
 
@@ -50,9 +54,18 @@ export const PlayInGame: React.FunctionComponent = () => {
   const [typedText, setTypedText] = useState(<></>);
   const [textToType, setTextToType] = useState(challenge.text);
   const [alreadyTyping, setAlreadyTyping] = useState(false);
+  let interval: NodeJS.Timeout;
+  const initTime = useCallback(() => {
+    const start = Date.now();
+    interval = setInterval(() => {
+      const delta = Date.now() - start;
+      setTime(delta);
+    }, 100);
+  }, [setTime]);
 
   const reset = useCallback(() => {
     setLaunched(false);
+    clearInterval(interval);
     setTime(0);
     setError(0);
     setTypedText(<></>);
@@ -60,15 +73,15 @@ export const PlayInGame: React.FunctionComponent = () => {
   }, [setTime, setError, setTypedText, setTextToType, setLaunched]);
 
   const launchGame = useCallback(() => {
+    reset();
     setLaunched(true);
+    initTime();
   }, [setLaunched]);
 
   // keyboard listener
   const listener = useCallback(
     (event: KeyboardEvent) => {
-      console.log('listening');
       if (!alreadyTyping) {
-        console.log('ty');
         setAlreadyTyping(true);
         const typedKey = event.key;
         const keyToType = textToType[0];
@@ -88,7 +101,12 @@ export const PlayInGame: React.FunctionComponent = () => {
           );
           setError(error + 1);
         }
-        setTextToType(textToType.substring(1));
+        const remainingCharacters: string = textToType.substring(1);
+        setTextToType(remainingCharacters);
+        if (!remainingCharacters) {
+          setLaunched(false);
+          clearInterval(interval);
+        }
         setAlreadyTyping(false);
       }
     },
@@ -128,7 +146,7 @@ export const PlayInGame: React.FunctionComponent = () => {
           Playing {challenge.name}
         </Typography>
       </Box>
-      <Box className={`${typingZone}`}>
+      <Box className={`${typingZone} ${blurred}`}>
         <Typography variant="h5">
           {typedText}
           {textToType}
@@ -159,8 +177,14 @@ export const PlayInGame: React.FunctionComponent = () => {
         >
           Cancel game
         </Button>
+      </Box>
+      <Box display={!!launched ? 'none' : 'block'}>
+        <Typography variant="h5">Score</Typography>
         <Typography>Timer: {time}</Typography>
         <Typography>Errors: {error}</Typography>
+      </Box>
+      <Box>
+        <Typography variant="h2">{time}</Typography>
       </Box>
     </Container>
   );
