@@ -46,15 +46,5 @@ export const globalStyles = makeStyles(theme => ({
   },
   thirdColor: {
     backgroundColor: '#4caf50'
-  },
-  overflowedField: {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
-  },
-  dialogSelectedElementTitle: {
-    display: 'inline-block',
-    maxWidth: '100%',
-    verticalAlign: 'bottom'
   }
 }));

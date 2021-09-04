@@ -10,6 +10,7 @@ export const notFoundStyle = makeStyles({
   image: {
     display: 'block',
     maxWidth: '30%',
+    minWidth: '150px',
     marginLeft: 'auto',
     marginRight: 'auto',
     width: '80%',
@@ -22,7 +23,7 @@ export const NotFoundError: React.FunctionComponent = () => {
   const { image } = notFoundStyle();
   return (
     <LandingAppTitle>
-      <React.Fragment>
+      <>
         <Typography variant="h2">404</Typography>
         <Typography variant="subtitle1">
           Uh Oh, Looks like you lost yourself. Couldn't find the requested page
@@ -38,7 +39,7 @@ export const NotFoundError: React.FunctionComponent = () => {
         >
           Get back home !
         </Button>
-      </React.Fragment>
+      </>
     </LandingAppTitle>
   );
 };

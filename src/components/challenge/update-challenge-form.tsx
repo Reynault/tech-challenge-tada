@@ -15,7 +15,7 @@ import { ChallengeActionType } from '../../contexts/challenges/challenges-reduce
 import { DialogContext } from '../../contexts/dialog-context';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { globalStyles } from '../../shared/styles/globalStyles';
-import { parseField } from '../../shared/validators/data-validators';
+import { Display } from '../shared/display';
 
 export interface UpdateChallengeFormProps {
   challenge?: ChallengeDto;
@@ -24,23 +24,18 @@ export interface UpdateChallengeFormProps {
 export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormProps> = ({
   challenge
 }) => {
-  const {
-    centeredElement,
-    overflowedField,
-    spacedInput,
-    dialogSelectedElementTitle
-  } = globalStyles();
+  const { centeredElement, spacedInput } = globalStyles();
 
   const { dispatch } = useContext(ChallengesContext);
   const { hideModal } = useContext(DialogContext);
 
-  const [name, setName] = useState(parseField(challenge?.name));
+  const [name, setName] = useState(!!challenge?.name ? challenge.name : '');
   const [description, setDescription] = useState(
-    parseField(challenge?.description)
+    !!challenge?.description ? challenge.description : ''
   );
-  const [text, setText] = useState(parseField(challenge?.text));
+  const [text, setText] = useState(!!challenge?.text ? challenge.text : '');
   const [difficulty, setDifficulty] = useState(
-    parseField(challenge?.difficulty)
+    !!challenge?.difficulty ? challenge.difficulty : 1
   );
 
   const submitForm = useCallback(
@@ -77,9 +72,7 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
     <form onSubmit={submitForm}>
       <DialogTitle className={centeredElement} id="alert-dialog-title">
         {!!challenge ? (
-          <span className={`${overflowedField} ${dialogSelectedElementTitle}`}>
-            Update {challenge.name}
-          </span>
+          <Display value={`Update ${challenge.name}`} />
         ) : (
           'Insert a challenges'
         )}
@@ -91,6 +84,7 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
           id="name"
           required
           label="Name"
+          inputProps={{ maxLength: 32 }}
           value={name}
           onChange={event => setName(event.target.value)}
         />
@@ -99,6 +93,7 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
           id="description"
           required
           label="Description"
+          inputProps={{ maxLength: 64 }}
           value={description}
           onChange={event => setDescription(event.target.value)}
         />
@@ -109,6 +104,9 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
           label="Text"
           multiline
           maxRows={8}
+          error
+          helperText="Incorrect entry."
+          inputProps={{ maxLength: 130000 }}
           value={text}
           onChange={event => setText(event.target.value)}
           variant="filled"
@@ -120,7 +118,7 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
             labelId="difficulty"
             required
             value={difficulty}
-            onChange={event => setDifficulty(event.target.value)}
+            onChange={(event: any) => setDifficulty(event.target.value)}
           >
             <MenuItem value={1}>Super easy</MenuItem>
             <MenuItem value={2}>Easy</MenuItem>

@@ -38,8 +38,8 @@ export const CardList: React.FunctionComponent<CardListProps<any>> = (
   }, [rows]);
   buildElementList();
   return (
-    <React.Fragment>
+    <>
       <Box className={list}>{rows}</Box>
-    </React.Fragment>
+    </>
   );
 };

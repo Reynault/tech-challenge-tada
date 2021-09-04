@@ -5,6 +5,7 @@ import { ChallengeActionType } from '../../contexts/challenges/challenges-reduce
 import { DialogContext } from '../../contexts/dialog-context';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { globalStyles } from '../../shared/styles/globalStyles';
+import { Display } from '../shared/display';
 
 export interface DeleteChallengeFormProps {
   challenge?: ChallengeDto;
@@ -13,11 +14,7 @@ export interface DeleteChallengeFormProps {
 export const DeleteChallengeForm: React.FunctionComponent<DeleteChallengeFormProps> = ({
   challenge
 }) => {
-  const {
-    centeredElement,
-    overflowedField,
-    dialogSelectedElementTitle
-  } = globalStyles();
+  const { centeredElement } = globalStyles();
 
   const { dispatch } = useContext(ChallengesContext);
   const { hideModal } = useContext(DialogContext);
@@ -32,17 +29,10 @@ export const DeleteChallengeForm: React.FunctionComponent<DeleteChallengeFormPro
   }, [dispatch, hideModal]);
 
   return (
-    <React.Fragment>
+    <>
       <DialogTitle className={centeredElement} id="alert-dialog-title">
         Do you really want to delete{' '}
-        {!!challenge ? (
-          <span className={`${overflowedField} ${dialogSelectedElementTitle}`}>
-            {challenge.name}
-          </span>
-        ) : (
-          'every challenges'
-        )}
-        ?
+        {!!challenge ? <Display value={challenge.name} /> : 'every challenges'}?
       </DialogTitle>
       <DialogActions>
         <Button onClick={hideModal} color="secondary" variant="contained">
@@ -57,6 +47,6 @@ export const DeleteChallengeForm: React.FunctionComponent<DeleteChallengeFormPro
           Submit
         </Button>
       </DialogActions>
-    </React.Fragment>
+    </>
   );
 };

@@ -18,7 +18,7 @@ export const Landing: React.FunctionComponent = () => {
   const { responsiveButton } = globalStyles();
   return (
     <LandingAppTitle>
-      <React.Fragment>
+      <>
         <Typography variant="h1">Type Mania</Typography>
         <Typography className={landingDescription} variant="subtitle1">
           An interactive web typing game where you can improve your typing
@@ -34,7 +34,7 @@ export const Landing: React.FunctionComponent = () => {
         >
           Play now !
         </Button>
-      </React.Fragment>
+      </>
     </LandingAppTitle>
   );
 };

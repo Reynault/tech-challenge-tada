@@ -1,5 +1,13 @@
-import { Dialog } from '@material-ui/core';
+import { Dialog, makeStyles, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
+
+const dialogStyles = makeStyles(theme => ({
+  root: {
+    [theme.breakpoints.down('xs')]: {
+      width: '100% !important'
+    }
+  }
+}));
 
 export interface SimpleModalProps {
   children: JSX.Element;
@@ -12,12 +20,17 @@ export const SimpleDialog: React.FunctionComponent<SimpleModalProps> = ({
   open,
   setOpen
 }) => {
+  const { root } = dialogStyles();
   const handleClose = () => {
     setOpen(false);
   };
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
   return (
     <Dialog
       open={open}
+      fullScreen={fullScreen}
+      className={root}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"

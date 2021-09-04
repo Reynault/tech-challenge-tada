@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { PageTitle } from '../components/shared/page-title';
 import { ChallengesContext } from '../contexts/challenges/challenges-context';
 import { Routes } from '../shared/constants/routes';
 import { globalStyles } from '../shared/styles/globalStyles';
@@ -141,11 +142,7 @@ export const PlayInGame: React.FunctionComponent = () => {
 
   return (
     <Container>
-      <Box>
-        <Typography variant="h3" className={centeredElement}>
-          Playing {challenge.name}
-        </Typography>
-      </Box>
+      <PageTitle {...{ label: challenge.name }} />
       <Box className={`${typingZone} ${blurred}`}>
         <Typography variant="h5">
           {typedText}

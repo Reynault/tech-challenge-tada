@@ -1,6 +1,6 @@
 // Context definition
 import React, { useCallback, useState } from 'react';
-import { SimpleDialog } from '../components/dialog/simple-dialog';
+import { SimpleDialog } from '../components/shared/simple-dialog';
 
 export interface ModalContextProps {
   showModal: (value: JSX.Element) => void;
