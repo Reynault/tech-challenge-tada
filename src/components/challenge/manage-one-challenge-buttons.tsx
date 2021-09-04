@@ -5,8 +5,8 @@ import { DialogContext } from '../../contexts/dialog-context';
 import { Routes } from '../../shared/constants/routes';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { globalStyles } from '../../shared/styles/globalStyles';
-import { DeleteChallengeForm } from './delete-challenge-form';
-import { UpdateChallengeForm } from './update-challenge-form';
+import { DeleteChallengeForm } from '../form/delete-challenge-form';
+import { UpdateChallengeForm } from '../form/update-challenge-form';
 
 export const ManageOneChallengeButtons: React.FunctionComponent<ChallengeDto> = (
   challenge: ChallengeDto

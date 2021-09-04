@@ -4,7 +4,7 @@ import { ChallengesContext } from '../../contexts/challenges/challenges-context'
 import { ChallengeActionType } from '../../contexts/challenges/challenges-reducer';
 import { globalStyles } from '../../shared/styles/globalStyles';
 
-export const PopulateChallenges: React.FunctionComponent = () => {
+export const PopulateChallengesButton: React.FunctionComponent = () => {
   const { dispatch } = useContext(ChallengesContext);
   const { centeredElement } = globalStyles();
   const populate = useCallback(() => {

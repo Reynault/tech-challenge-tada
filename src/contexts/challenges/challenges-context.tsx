@@ -6,8 +6,8 @@ import { ChallengeAction, ChallengesReducer, get } from './challenges-reducer';
 export interface ChallengeContextProps {
   state: ChallengeDto[];
   dispatch: Dispatch<ChallengeAction>;
-  isChallengesEmpty: (challenges: ChallengeDto[]) => boolean;
-  getOne: (challenges: ChallengeDto[], id: string) => ChallengeDto;
+  isChallengesEmpty: () => boolean;
+  getOne: (id: string) => ChallengeDto;
 }
 
 export const ChallengesContext: React.Context<ChallengeContextProps> = React.createContext<
@@ -29,20 +29,15 @@ export const ChallengeProvider: React.FunctionComponent<ChallengeProviderProps> 
 }) => {
   const [state, dispatch] = useReducer(ChallengesReducer, get());
 
-  const isChallengesEmpty = useCallback(
-    (challenges: ChallengeDto[]): boolean => {
-      return (
-        !challenges || (Array.isArray(challenges) && challenges.length === 0)
-      );
-    },
-    []
-  );
+  const isChallengesEmpty = useCallback((): boolean => {
+    return !state || (Array.isArray(state) && state.length === 0);
+  }, [state]);
 
   const getOne = useCallback(
-    (challenges: ChallengeDto[], id: string): ChallengeDto => {
-      return challenges.find((c: ChallengeDto) => c.name === id);
+    (id: string): ChallengeDto => {
+      return state.find((c: ChallengeDto) => c.name === id);
     },
-    []
+    [state]
   );
 
   return (

@@ -27,8 +27,7 @@ const save = (state: ChallengeDto[]): ChallengeDto[] => {
 
 // POST
 const post = (state: ChallengeDto[], payload: ChallengeDto): ChallengeDto[] => {
-  state.push(payload);
-  return state;
+  return state.concat([payload]);
 };
 
 // PUT
@@ -37,13 +36,7 @@ const put = (
   payload: ChallengeDto,
   old: ChallengeDto
 ): ChallengeDto[] => {
-  const indexOfOldChallenge = state.findIndex(
-    (challenge: ChallengeDto) => challenge.name === old.name
-  );
-  if (indexOfOldChallenge >= 0) {
-    state[indexOfOldChallenge] = payload;
-  }
-  return state;
+  return state.map((c: ChallengeDto) => (c.name === old.name ? payload : c));
 };
 
 // DELETE ALL
@@ -88,7 +81,7 @@ export const ChallengesReducer: Reducer<ChallengeDto[], ChallengeAction> = (
       state = deleteOne(state, action.payload);
       break;
     case ChallengeActionType.POST:
-      post(state, action.payload);
+      state = post(state, action.payload);
       break;
     case ChallengeActionType.PUT:
       state = put(state, action.payload, action.old);

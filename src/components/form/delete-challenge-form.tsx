@@ -1,4 +1,4 @@
-import { Button, DialogActions, DialogTitle } from '@material-ui/core';
+import { DialogActions, DialogTitle } from '@material-ui/core';
 import React, { useCallback, useContext } from 'react';
 import { ChallengesContext } from '../../contexts/challenges/challenges-context';
 import { ChallengeActionType } from '../../contexts/challenges/challenges-reducer';
@@ -6,6 +6,7 @@ import { DialogContext } from '../../contexts/dialog-context';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { globalStyles } from '../../shared/styles/globalStyles';
 import { Display } from '../shared/display';
+import { SubmitButtons } from './submit-buttons';
 
 export interface DeleteChallengeFormProps {
   challenge?: ChallengeDto;
@@ -29,24 +30,14 @@ export const DeleteChallengeForm: React.FunctionComponent<DeleteChallengeFormPro
   }, [dispatch, hideModal]);
 
   return (
-    <>
+    <form onSubmit={deleteProcedure}>
       <DialogTitle className={centeredElement} id="alert-dialog-title">
         Do you really want to delete{' '}
         {!!challenge ? <Display value={challenge.name} /> : 'every challenges'}?
       </DialogTitle>
       <DialogActions>
-        <Button onClick={hideModal} color="secondary" variant="contained">
-          Cancel
-        </Button>
-        <Button
-          onClick={deleteProcedure}
-          type="submit"
-          color="primary"
-          variant="contained"
-        >
-          Submit
-        </Button>
+        <SubmitButtons />
       </DialogActions>
-    </>
+    </form>
   );
 };

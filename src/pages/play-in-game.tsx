@@ -10,7 +10,6 @@ import { Link, useParams } from 'react-router-dom';
 import { PageTitle } from '../components/shared/page-title';
 import { ChallengesContext } from '../contexts/challenges/challenges-context';
 import { Routes } from '../shared/constants/routes';
-import { globalStyles } from '../shared/styles/globalStyles';
 
 const playStyle = makeStyles(theme => ({
   correctTypedText: {
@@ -35,17 +34,16 @@ const playStyle = makeStyles(theme => ({
 }));
 
 export const PlayInGame: React.FunctionComponent = () => {
-  const { centeredElement } = globalStyles();
   const {
     typingZone,
     blurred,
     correctTypedText,
     incorrectTypedText
   } = playStyle();
-  const { getOne, state } = useContext(ChallengesContext);
+  const { getOne } = useContext(ChallengesContext);
   const { challengeId }: any = useParams();
   // fetching wanted challenge
-  const challenge = getOne(state, challengeId);
+  const challenge = getOne(challengeId);
 
   // states of time and error
   const [launched, setLaunched] = useState(false);

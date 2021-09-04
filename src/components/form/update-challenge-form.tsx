@@ -1,5 +1,4 @@
 import {
-  Button,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -16,6 +15,7 @@ import { DialogContext } from '../../contexts/dialog-context';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { globalStyles } from '../../shared/styles/globalStyles';
 import { Display } from '../shared/display';
+import { SubmitButtons } from './submit-buttons';
 
 export interface UpdateChallengeFormProps {
   challenge?: ChallengeDto;
@@ -26,7 +26,7 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
 }) => {
   const { centeredElement, spacedInput } = globalStyles();
 
-  const { dispatch } = useContext(ChallengesContext);
+  const { dispatch, getOne } = useContext(ChallengesContext);
   const { hideModal } = useContext(DialogContext);
 
   const [name, setName] = useState(!!challenge?.name ? challenge.name : '');
@@ -38,32 +38,38 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
     !!challenge?.difficulty ? challenge.difficulty : 1
   );
 
+  const [alreadyExists, setAlreadyExists] = useState(false);
+
   const submitForm = useCallback(
     (e: any) => {
       e.preventDefault();
-      if (!!challenge) {
-        dispatch({
-          type: ChallengeActionType.PUT,
-          payload: {
-            name,
-            description,
-            difficulty,
-            text
-          },
-          old: challenge
-        });
+      if (!!getOne(name)) {
+        setAlreadyExists(true);
       } else {
-        dispatch({
-          type: ChallengeActionType.POST,
-          payload: {
-            name,
-            description,
-            difficulty,
-            text
-          }
-        });
+        if (!!challenge) {
+          dispatch({
+            type: ChallengeActionType.PUT,
+            payload: {
+              name,
+              description,
+              difficulty,
+              text
+            },
+            old: challenge
+          });
+        } else {
+          dispatch({
+            type: ChallengeActionType.POST,
+            payload: {
+              name,
+              description,
+              difficulty,
+              text
+            }
+          });
+        }
+        hideModal();
       }
-      hideModal();
     },
     [name, description, difficulty, text]
   );
@@ -79,10 +85,11 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
       </DialogTitle>
       <DialogContent>
         <TextField
-          disabled={!!challenge}
           className={spacedInput}
           id="name"
+          error={alreadyExists}
           required
+          helperText={alreadyExists ? 'This name is already used...' : ''}
           label="Name"
           inputProps={{ maxLength: 32 }}
           value={name}
@@ -104,8 +111,6 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
           label="Text"
           multiline
           maxRows={8}
-          error
-          helperText="Incorrect entry."
           inputProps={{ maxLength: 130000 }}
           value={text}
           onChange={event => setText(event.target.value)}
@@ -129,12 +134,7 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
         </FormControl>
       </DialogContent>
       <DialogActions>
-        <Button onClick={hideModal} color="secondary" variant="contained">
-          Cancel
-        </Button>
-        <Button type="submit" color="primary" variant="contained">
-          Submit
-        </Button>
+        <SubmitButtons />
       </DialogActions>
     </form>
   );

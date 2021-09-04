@@ -8,8 +8,8 @@ import {
 import React from 'react';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { Display } from '../shared/display';
-import { ManageOneChallengeButtons } from './manage-one-challenge-buttons';
 import { Stars } from '../shared/stars';
+import { ManageOneChallengeButtons } from './manage-one-challenge-buttons';
 
 const challengeCardStyles = makeStyles(theme => ({
   root: {
@@ -39,16 +39,15 @@ export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
   challenge: ChallengeDto
 ) => {
   const { root, cardButtons } = challengeCardStyles();
-
   return (
     <Card className={root}>
       <CardContent>
         <Typography variant="h5">
-          <Display value={challenge.name} />
+          <Display value={challenge?.name} />
         </Typography>
-        <Stars {...{ value: challenge.difficulty }} />
+        <Stars {...{ value: challenge?.difficulty }} />
         <Typography variant="body1">
-          <Display value={challenge.description} />
+          <Display value={challenge?.description} />
         </Typography>
       </CardContent>
       <CardActions className={cardButtons}>

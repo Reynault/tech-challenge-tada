@@ -5,3 +5,10 @@ export interface ChallengeDto {
   difficulty: number;
   bestScore?: number;
 }
+
+export const defaultChallenge: ChallengeDto = {
+  name: '',
+  description: '',
+  text: '',
+  difficulty: 1
+};
