@@ -1,6 +1,6 @@
 import { Box } from '@material-ui/core';
-import React, { useCallback } from 'react';
 import StarIcon from '@material-ui/icons/Star';
+import React, { useCallback } from 'react';
 
 export interface DifficultyProps {
   value?: number;

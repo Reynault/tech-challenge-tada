@@ -9,7 +9,7 @@ import {
   Select,
   TextField
 } from '@material-ui/core';
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { ChallengesContext } from '../../contexts/challenges/challenges-context';
 import { ChallengeActionType } from '../../contexts/challenges/challenges-reducer';
 import { DialogContext } from '../../contexts/dialog-context';
@@ -43,32 +43,35 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
     parseField(challenge?.difficulty)
   );
 
-  const submitForm = (e: any) => {
-    e.preventDefault();
-    if (!!challenge) {
-      dispatch({
-        type: ChallengeActionType.PUT,
-        payload: {
-          name,
-          description,
-          difficulty,
-          text
-        },
-        old: challenge
-      });
-    } else {
-      dispatch({
-        type: ChallengeActionType.POST,
-        payload: {
-          name,
-          description,
-          difficulty,
-          text
-        }
-      });
-    }
-    hideModal();
-  };
+  const submitForm = useCallback(
+    (e: any) => {
+      e.preventDefault();
+      if (!!challenge) {
+        dispatch({
+          type: ChallengeActionType.PUT,
+          payload: {
+            name,
+            description,
+            difficulty,
+            text
+          },
+          old: challenge
+        });
+      } else {
+        dispatch({
+          type: ChallengeActionType.POST,
+          payload: {
+            name,
+            description,
+            difficulty,
+            text
+          }
+        });
+      }
+      hideModal();
+    },
+    [name, description, difficulty, text]
+  );
 
   return (
     <form onSubmit={submitForm}>

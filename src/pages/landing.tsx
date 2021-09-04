@@ -1,10 +1,9 @@
-import { Box, Button, makeStyles, Typography } from '@material-ui/core';
+import { Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { LandingAppTitle } from '../components/landing/landing-app-title';
 import { Routes } from '../shared/constants/routes';
 import { globalStyles } from '../shared/styles/globalStyles';
-import { parseField } from '../shared/validators/data-validators';
 
 export const landingStyle = makeStyles({
   landingDescription: {
