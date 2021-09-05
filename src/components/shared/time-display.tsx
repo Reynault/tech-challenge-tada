@@ -7,7 +7,7 @@ const parseTime = (time: number): string => {
       timeString.length > 3
         ? timeString.substring(0, timeString.length - 3)
         : '0';
-    const milliseconds = timeString.substring(timeString.length - 3);
+    const milliseconds = timeString.substr(timeString.length - 3, 2);
     return `${seconds}s ${milliseconds}`;
   } else {
     return `0s 0`;

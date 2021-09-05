@@ -1,5 +1,11 @@
 import { Box, Button, makeStyles, Typography } from '@material-ui/core';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
 import { GameContext } from '../../contexts/game-context';
 import { globalStyles } from '../../shared/styles/globalStyles';
 
@@ -16,7 +22,12 @@ const playStyle = makeStyles(theme => ({
   typingZone: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: '4px',
-    padding: '1%'
+    padding: '1%',
+    overflow: 'auto',
+    maxHeight: '80px',
+    '&:hover': {
+      filter: 'blur(0px)'
+    }
   },
   typingZoneRibbon: {
     textAlign: 'center',
@@ -24,20 +35,17 @@ const playStyle = makeStyles(theme => ({
     backgroundColor: 'rgba(0,0,0,0.4)'
   },
   blurred: {
-    animationDirection: 'reverse',
     animation: 'blur 0.5s',
     filter: 'blur(4px)'
-  },
-  notBlurred: {
-    animation: 'blur 0.5s'
   }
 }));
 
 export const TypingZone: React.FunctionComponent = () => {
+  const [scrollValue, setScrollValue] = useState(0);
+  const typingZoneElement = useRef(null);
   const {
     typingZone,
     blurred,
-    notBlurred,
     correctTypedText,
     incorrectTypedText,
     decoratedText,
@@ -111,8 +119,9 @@ export const TypingZone: React.FunctionComponent = () => {
       </Button>
       <Typography
         variant="h5"
+        ref={typingZoneElement}
         className={`${typingZone} ${
-          launched ? notBlurred : blurred
+          launched ? '' : blurred
         } ${centeredElement}`}
       >
         {typedText}

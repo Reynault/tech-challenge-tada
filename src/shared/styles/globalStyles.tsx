@@ -22,10 +22,10 @@ export const globalStyles = makeStyles(theme => ({
     },
     '@keyframes blur': {
       '0%': {
-        filter: 'blur(4px)'
+        filter: 'blur(0px)'
       },
       '100%': {
-        filter: 'blur(0px)'
+        filter: 'blur(4px)'
       }
     }
   },

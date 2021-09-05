@@ -13,7 +13,7 @@ export const GameConfigurator: React.FunctionComponent<GameConfiguratorProps> = 
   const { setDelay } = useContext(TimerContext);
   useEffect(() => {
     setChallengeText(text);
-    setDelay(1);
+    setDelay(10);
   }, []);
   return <></>;
 };

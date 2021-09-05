@@ -6,7 +6,6 @@ const backgroundStyle = makeStyles({
   landingBackgroundImage: {
     backgroundImage: `url(${LandingBackgroundImage})`,
     filter: 'blur(8px)',
-    opacity: '0.6',
     height: '92vh',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',

@@ -1,4 +1,4 @@
-import { Button, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { LandingAppTitle } from '../components/landing/landing-app-title';
@@ -25,15 +25,17 @@ export const Landing: React.FunctionComponent = () => {
           skills using different challenges that you can add, delete and
           improve.
         </Typography>
-        <Button
-          className={responsiveButton}
-          variant="contained"
-          color="primary"
-          component={Link}
-          to={Routes.PLAY_SELECTION}
-        >
-          Play now !
-        </Button>
+        <Box p={2}>
+          <Button
+            className={responsiveButton}
+            variant="contained"
+            color="primary"
+            component={Link}
+            to={Routes.PLAY_SELECTION}
+          >
+            Play now !
+          </Button>
+        </Box>
       </>
     </LandingAppTitle>
   );
