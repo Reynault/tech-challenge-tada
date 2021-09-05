@@ -20,30 +20,25 @@ export const DetailedScore: React.FunctionComponent<DetailedScoreProps> = ({
   const { launched, finished } = useContext(GameContext);
   return (
     <Box className={centeredElement} p={2}>
-      {launched || finished ? (
-        <Box>
-          <Typography variant="h4">Score</Typography>
-          <Typography variant="body1">
-            Time: <TimeDisplay time={score?.time} />
-          </Typography>
-          <Typography variant="body1">Errors: {score?.error}</Typography>
-        </Box>
-      ) : (
-        <></>
-      )}
-      {!!bestScore ? (
-        <Box>
-          <Typography variant="h4">Best score</Typography>
-          <Typography variant="body1" color={hasWon ? 'primary' : 'initial'}>
-            Time: <TimeDisplay time={bestScore?.time} />
-          </Typography>
-          <Typography variant="body1" color={hasWon ? 'primary' : 'initial'}>
-            Errors: {bestScore?.error}
-          </Typography>
-        </Box>
-      ) : (
-        <></>
-      )}
+      <Box>
+        <Typography variant="h4">Score</Typography>
+        <Typography variant="body1">
+          Time: <TimeDisplay time={score?.time} />
+        </Typography>
+        <Typography variant="body1">
+          Errors: {!!score?.error ? score.error : '--'}
+        </Typography>
+      </Box>
+
+      <Box>
+        <Typography variant="h4">Best score</Typography>
+        <Typography variant="body1" color={hasWon ? 'primary' : 'initial'}>
+          Time: <TimeDisplay time={bestScore?.time} />
+        </Typography>
+        <Typography variant="body1" color={hasWon ? 'primary' : 'initial'}>
+          Errors: {!!bestScore?.error ? bestScore.error : '--'}
+        </Typography>
+      </Box>
     </Box>
   );
 };

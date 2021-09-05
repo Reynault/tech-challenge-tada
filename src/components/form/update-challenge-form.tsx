@@ -36,6 +36,18 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
     !!challenge?.description ? challenge.description : ''
   );
   const [text, setText] = useState(!!challenge?.text ? challenge.text : '');
+  const [invalidText, setInvalidText] = useState(false);
+  const checkText = useCallback(
+    (newText: string) => {
+      const format = /[\n\r\t]/;
+      if (!newText.match(format)) {
+        setText(newText.trim());
+      } else {
+        setInvalidText(true);
+      }
+    },
+    [setText, setInvalidText]
+  );
   const [difficulty, setDifficulty] = useState(
     !!challenge?.difficulty ? challenge.difficulty : 1
   );
@@ -113,13 +125,19 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
         <TextField
           className={spacedInput}
           id="text"
+          error={invalidText}
+          helperText={
+            invalidText
+              ? "Tabs and new lines aren't allowed in this field."
+              : ''
+          }
           required
           label="Text"
           multiline
           maxRows={8}
           inputProps={{ maxLength: 130000 }}
           value={text}
-          onChange={event => setText(event.target.value)}
+          onChange={event => checkText(event.target.value)}
           variant="filled"
         />
         <FormControl className={spacedInput}>

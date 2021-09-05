@@ -8,9 +8,9 @@ const parseTime = (time: number): string => {
         ? timeString.substring(0, timeString.length - 3)
         : '0';
     const milliseconds = timeString.substr(timeString.length - 3, 2);
-    return `${seconds}s ${milliseconds}`;
+    return `${seconds}:${milliseconds}`;
   } else {
-    return `0s 0`;
+    return `--:--`;
   }
 };
 

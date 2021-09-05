@@ -19,14 +19,6 @@ export const globalStyles = makeStyles(theme => ({
       '100%': {
         opacity: '1'
       }
-    },
-    '@keyframes blur': {
-      '0%': {
-        filter: 'blur(0px)'
-      },
-      '100%': {
-        filter: 'blur(4px)'
-      }
     }
   },
   centeredElement: {

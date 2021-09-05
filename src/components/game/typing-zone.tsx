@@ -1,13 +1,6 @@
 import { Box, Button, makeStyles, Typography } from '@material-ui/core';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { GameContext } from '../../contexts/game-context';
-import { globalStyles } from '../../shared/styles/globalStyles';
 
 const playStyle = makeStyles(theme => ({
   correctTypedText: {
@@ -21,37 +14,44 @@ const playStyle = makeStyles(theme => ({
   },
   typingZone: {
     backgroundColor: theme.palette.background.paper,
-    borderRadius: '4px',
-    padding: '1%',
-    overflow: 'auto',
-    maxHeight: '80px',
-    '&:hover': {
-      filter: 'blur(0px)'
-    }
+    borderRadius: '4px'
+  },
+  textTypingZone: {
+    overflow: 'hidden',
+    whiteSpace: 'pre',
+    width: '50%',
+    display: 'inline-block'
+  },
+  rightTypingZone: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    textAlign: 'right'
+  },
+  rightTypingZoneFloat: {
+    float: 'right'
+  },
+  leftTypingZone: {
+    textAlign: 'left'
   },
   typingZoneRibbon: {
     textAlign: 'center',
     width: '100%',
     backgroundColor: 'rgba(0,0,0,0.4)'
-  },
-  blurred: {
-    animation: 'blur 0.5s',
-    filter: 'blur(4px)'
   }
 }));
 
 export const TypingZone: React.FunctionComponent = () => {
-  const [scrollValue, setScrollValue] = useState(0);
-  const typingZoneElement = useRef(null);
   const {
     typingZone,
-    blurred,
+    textTypingZone,
+    rightTypingZone,
+    rightTypingZoneFloat,
+    leftTypingZone,
     correctTypedText,
     incorrectTypedText,
     decoratedText,
     typingZoneRibbon
   } = playStyle();
-  const { centeredElement } = globalStyles();
   const { typedKey, textToType, launched, typeAKey, launchGame } = useContext(
     GameContext
   );
@@ -97,16 +97,24 @@ export const TypingZone: React.FunctionComponent = () => {
     };
   }, [launched, handleKeyPress]);
 
+  const launchGameByTyping = useCallback(
+    event => {
+      launchGame();
+      typeAKey(event.key);
+    },
+    [launchGame, typeAKey]
+  );
+
   // initial listener to launch a game
   useEffect(() => {
     if (!launched) {
-      document.body.addEventListener('keypress', launchGame);
+      document.body.addEventListener('keypress', launchGameByTyping);
     }
     return () => {
       // remove when unmount or when new redefinition
-      document.body.removeEventListener('keypress', launchGame);
+      document.body.removeEventListener('keypress', launchGameByTyping);
     };
-  }, [launched, launchGame]);
+  }, [launched, launchGameByTyping]);
 
   return (
     <Box>
@@ -115,18 +123,21 @@ export const TypingZone: React.FunctionComponent = () => {
         onClick={() => launchGame()}
         className={typingZoneRibbon}
       >
-        Type a letter or click here to start the challenge
+        Type the first letter or click here to start the challenge
       </Button>
-      <Typography
-        variant="h5"
-        ref={typingZoneElement}
-        className={`${typingZone} ${
-          launched ? '' : blurred
-        } ${centeredElement}`}
-      >
-        {typedText}
-        {textToType}
-      </Typography>
+      <Box p={1} className={typingZone}>
+        <Box className={`${rightTypingZone} ${textTypingZone}`}>
+          <Typography variant="h5" className={rightTypingZoneFloat}>
+            {typedText}
+          </Typography>
+        </Box>
+        <Typography
+          variant="h5"
+          className={`${leftTypingZone} ${textTypingZone}`}
+        >
+          {textToType}
+        </Typography>
+      </Box>
     </Box>
   );
 };
