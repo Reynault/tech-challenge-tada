@@ -9,7 +9,6 @@ import { PageTitle } from '../shared/page-title';
 import { DetailedScore } from './detailed-score';
 import { GameConfigurator } from './game-configurator';
 import { StateButtons } from './state-buttons';
-import { TimerDisplay } from './timer-display';
 import { TypingZone } from './typing-zone';
 
 const isBestScore = (best: ScoreDto, score: ScoreDto): boolean => {
@@ -61,8 +60,11 @@ export const SimpleGame: React.FunctionComponent<SimpleGameProps> = ({
       <PageTitle {...{ label: 'Type the text !' }} />
       <TypingZone />
       <StateButtons />
-      <DetailedScore score={challenge.bestScore} hasWon={hasWon} />
-      <TimerDisplay />
+      <DetailedScore
+        bestScore={challenge.bestScore}
+        score={{ time, error }}
+        hasWon={hasWon}
+      />
     </Container>
   );
 };

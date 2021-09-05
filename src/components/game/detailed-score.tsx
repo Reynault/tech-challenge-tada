@@ -7,27 +7,43 @@ import { TimeDisplay } from '../shared/time-display';
 
 export interface DetailedScoreProps {
   score: ScoreDto;
+  bestScore: ScoreDto;
   hasWon: boolean;
 }
 
 export const DetailedScore: React.FunctionComponent<DetailedScoreProps> = ({
   score,
+  bestScore,
   hasWon
 }) => {
   const { centeredElement } = globalStyles();
-  const { finished } = useContext(GameContext);
-  return finished || !!score ? (
-    <Box className={centeredElement}>
-      <Typography variant="h2">Score</Typography>
-      <Typography variant="h4">
-        Time: <TimeDisplay time={score?.time} />
-      </Typography>
-      <Typography variant="h4">Errors: {score?.error}</Typography>
-      <Typography variant="h1" style={{ display: finished ? 'block' : 'none' }}>
-        {hasWon ? 'Good Job !' : 'Too bad !'}
-      </Typography>
+  const { launched, finished } = useContext(GameContext);
+  return (
+    <Box className={centeredElement} p={2}>
+      {launched || finished ? (
+        <Box>
+          <Typography variant="h4">Score</Typography>
+          <Typography variant="body1">
+            Time: <TimeDisplay time={score?.time} />
+          </Typography>
+          <Typography variant="body1">Errors: {score?.error}</Typography>
+        </Box>
+      ) : (
+        <></>
+      )}
+      {!!bestScore ? (
+        <Box>
+          <Typography variant="h4">Best score</Typography>
+          <Typography variant="body1" color={hasWon ? 'primary' : 'initial'}>
+            Time: <TimeDisplay time={bestScore?.time} />
+          </Typography>
+          <Typography variant="body1" color={hasWon ? 'primary' : 'initial'}>
+            Errors: {bestScore?.error}
+          </Typography>
+        </Box>
+      ) : (
+        <></>
+      )}
     </Box>
-  ) : (
-    <></>
   );
 };

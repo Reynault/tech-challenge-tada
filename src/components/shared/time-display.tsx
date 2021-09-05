@@ -1,13 +1,17 @@
 import React from 'react';
 
 const parseTime = (time: number): string => {
-  const timeString: string = time.toString();
-  const seconds =
-    timeString.length > 3
-      ? timeString.substring(0, timeString.length - 3)
-      : '0';
-  const milliseconds = timeString.substring(timeString.length - 3);
-  return `${seconds}s ${milliseconds}`;
+  if (!!time) {
+    const timeString: string = time.toString();
+    const seconds =
+      timeString.length > 3
+        ? timeString.substring(0, timeString.length - 3)
+        : '0';
+    const milliseconds = timeString.substring(timeString.length - 3);
+    return `${seconds}s ${milliseconds}`;
+  } else {
+    return `0s 0`;
+  }
 };
 
 export interface TimeDisplayProps {
@@ -17,5 +21,5 @@ export interface TimeDisplayProps {
 export const TimeDisplay: React.FunctionComponent<TimeDisplayProps> = ({
   time
 }) => {
-  return <>{!!time ? parseTime(time) : ''}</>;
+  return <>{parseTime(time)}</>;
 };

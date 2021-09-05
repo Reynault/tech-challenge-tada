@@ -1,13 +1,17 @@
-import { makeStyles } from '@material-ui/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { TimerContext } from './timer-context';
+
+export interface TypedKey {
+  key: string;
+  isValid: boolean;
+}
 
 export interface GameContextProps {
   launchGame: () => void;
   resetGame: () => void;
   launched: boolean;
   typeAKey: (key: string) => void;
-  typedText: JSX.Element;
+  typedKey: TypedKey;
   textToType: string;
   setChallengeText: (text: string) => void;
   error: number;
@@ -19,7 +23,7 @@ export const GameContext: React.Context<GameContextProps> = React.createContext(
     launchGame: null,
     resetGame: null,
     launched: null,
-    typedText: null,
+    typedKey: null,
     textToType: null,
     typeAKey: null,
     setChallengeText: null,
@@ -32,23 +36,13 @@ export interface GameProviderProps {
   children: JSX.Element;
 }
 
-const playStyle = makeStyles({
-  correctTypedText: {
-    color: '#4caf50'
-  },
-  incorrectTypedText: {
-    color: '#f44336'
-  }
-});
-
 export const GameProvider: React.FunctionComponent<GameProviderProps> = ({
   children
 }) => {
-  const { correctTypedText, incorrectTypedText } = playStyle();
   const { start, reset, stop } = useContext(TimerContext);
 
   const [initialText, setInitialText] = useState('');
-  const [typedText, setTypedText] = useState(<></>);
+  const [typedKey, setTypedKey] = useState(null);
   const [textToType, setTextToType] = useState('');
 
   const [launched, setLaunched] = useState(false);
@@ -71,9 +65,9 @@ export const GameProvider: React.FunctionComponent<GameProviderProps> = ({
     setLaunched(false);
     reset();
     setError(0);
-    setTypedText(<></>);
+    setTypedKey(null);
     setTextToType(initialText);
-  }, [setLaunched, reset, setError, setTypedText, setTextToType, initialText]);
+  }, [setLaunched, reset, setError, setTypedKey, setTextToType, initialText]);
 
   const launchGame = useCallback(() => {
     resetGame();
@@ -88,19 +82,9 @@ export const GameProvider: React.FunctionComponent<GameProviderProps> = ({
       setAlreadyTyping(true);
       const keyToType = textToType[0];
       if (typedKey === keyToType) {
-        setTypedText(
-          <>
-            {typedText}
-            <span className={correctTypedText}>{keyToType}</span>
-          </>
-        );
+        setTypedKey({ key: keyToType, isValid: true });
       } else {
-        setTypedText(
-          <>
-            {typedText}
-            <span className={incorrectTypedText}>{keyToType}</span>
-          </>
-        );
+        setTypedKey({ key: keyToType, isValid: false });
         setError(error + 1);
       }
       const remainingCharacters: string = textToType.substring(1);
@@ -115,8 +99,7 @@ export const GameProvider: React.FunctionComponent<GameProviderProps> = ({
     [
       setError,
       error,
-      typedText,
-      setTypedText,
+      setTypedKey,
       textToType,
       setTextToType,
       alreadyTyping,
@@ -152,7 +135,7 @@ export const GameProvider: React.FunctionComponent<GameProviderProps> = ({
         launchGame,
         resetGame,
         launched,
-        typedText,
+        typedKey,
         textToType,
         typeAKey,
         error,
