@@ -121,7 +121,8 @@ export const GameProvider: React.FunctionComponent<GameProviderProps> = ({
       setTextToType,
       alreadyTyping,
       setAlreadyTyping,
-      setFinished
+      setFinished,
+      stop
     ]
   );
 

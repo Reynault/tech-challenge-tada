@@ -41,16 +41,16 @@ export const TimerProvider: React.FunctionComponent<TimerProviderProps> = ({
         setTime(delta);
       }, delay)
     );
-  }, [timer, delay]);
+  }, [setTime, setTimer, delay]);
 
   const stop = useCallback(() => {
     setTimer(null);
-  }, [timer]);
+  }, [setTimer]);
 
   const reset = useCallback(() => {
     setTime(0);
     stop();
-  }, [stop]);
+  }, [setTime, stop]);
 
   useEffect(() => {
     return () => {

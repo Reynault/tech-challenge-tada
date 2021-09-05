@@ -17,5 +17,5 @@ export interface TimeDisplayProps {
 export const TimeDisplay: React.FunctionComponent<TimeDisplayProps> = ({
   time
 }) => {
-  return <>{parseTime(time)}</>;
+  return <>{!!time ? parseTime(time) : ''}</>;
 };

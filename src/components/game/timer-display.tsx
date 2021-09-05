@@ -7,7 +7,6 @@ import { TimeDisplay } from '../shared/time-display';
 export const TimerDisplay: React.FunctionComponent = () => {
   const { centeredElement } = globalStyles();
   const { time } = useContext(TimerContext);
-
   return (
     <Box className={centeredElement}>
       <Typography variant="h2">
