@@ -1,10 +1,10 @@
 import { Container } from '@material-ui/core';
 import React, { useContext } from 'react';
-import { ChallengeList } from '../components/challenge/challenge-list';
 import { ChallengeCard } from '../components/challenge/challenge-card';
+import { ChallengeList } from '../components/challenge/challenge-list';
 import { ManageChallengesButtons } from '../components/challenge/manage-challenges-buttons';
-import { PageTitle } from '../components/shared/page-title';
 import { PopulateChallengesButton } from '../components/challenge/populate-challenges-button';
+import { PageTitle } from '../components/shared/page-title';
 import { ChallengesContext } from '../contexts/challenges/challenges-context';
 import { globalStyles } from '../shared/styles/globalStyles';
 

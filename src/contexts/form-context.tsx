@@ -1,7 +1,5 @@
 // Context definition
-import React, { useCallback, useState } from 'react';
-import { SimpleDialog } from '../components/shared/simple-dialog';
-import { ChallengeActionType } from './challenges/challenges-reducer';
+import React from 'react';
 
 export interface CustomField {
   type: 'text' | 'select';
@@ -14,11 +12,11 @@ export interface FormContextProps {
   submit: (values: any) => CustomField[];
 }
 
-export const FormContext: React.Context<FormContextProps> = React.createContext<
-  FormContextProps
->({
-  submit: null
-});
+export const FormContext: React.Context<FormContextProps> = React.createContext(
+  {
+    submit: null
+  }
+);
 
 // Specific provider definition as a component
 export interface FormProviderProps {

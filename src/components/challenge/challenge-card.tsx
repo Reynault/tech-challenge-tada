@@ -8,6 +8,7 @@ import {
 import React from 'react';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { Display } from '../shared/display';
+import { Score } from '../shared/score';
 import { Stars } from '../shared/stars';
 import { ManageOneChallengeButtons } from './manage-one-challenge-buttons';
 
@@ -45,6 +46,7 @@ export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
         <Typography variant="h5">
           <Display value={challenge?.name} />
         </Typography>
+        <Score {...challenge?.bestScore} />
         <Stars {...{ value: challenge?.difficulty }} />
         <Typography variant="body1">
           <Display value={challenge?.description} />

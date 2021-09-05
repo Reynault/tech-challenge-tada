@@ -36,6 +36,9 @@ const put = (
   payload: ChallengeDto,
   old: ChallengeDto
 ): ChallengeDto[] => {
+  if (payload.text === old.text && !payload.bestScore && !!old.bestScore) {
+    payload.bestScore = old.bestScore;
+  }
   return state.map((c: ChallengeDto) => (c.name === old.name ? payload : c));
 };
 

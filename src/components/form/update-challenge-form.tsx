@@ -1,4 +1,6 @@
 import {
+  Box,
+  CircularProgress,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -39,13 +41,14 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
   );
 
   const [alreadyExists, setAlreadyExists] = useState(false);
+  const [validating, setValidating] = useState(false);
 
   const submitForm = useCallback(
     (e: any) => {
       e.preventDefault();
-      if (!!getOne(name)) {
-        setAlreadyExists(true);
-      } else {
+      setValidating(true);
+      const currentName = !!challenge ? challenge?.name : '';
+      if (currentName === name || !getOne(name)) {
         if (!!challenge) {
           dispatch({
             type: ChallengeActionType.PUT,
@@ -69,9 +72,12 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
           });
         }
         hideModal();
+      } else {
+        setAlreadyExists(true);
       }
+      setValidating(false);
     },
-    [name, description, difficulty, text]
+    [name, description, difficulty, text, validating]
   );
 
   return (
@@ -100,7 +106,7 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
           id="description"
           required
           label="Description"
-          inputProps={{ maxLength: 64 }}
+          inputProps={{ maxLength: 128 }}
           value={description}
           onChange={event => setDescription(event.target.value)}
         />
@@ -132,6 +138,12 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
             <MenuItem value={5}>Super Hard</MenuItem>
           </Select>
         </FormControl>
+        <Box
+          className={centeredElement}
+          style={{ display: validating ? 'block' : 'none' }}
+        >
+          <CircularProgress />
+        </Box>
       </DialogContent>
       <DialogActions>
         <SubmitButtons />

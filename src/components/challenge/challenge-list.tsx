@@ -11,7 +11,7 @@ const cardListStyle = makeStyles(theme => ({
     '& > *': {
       flex: '1 1 30%'
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: 'row !important',
       '& *': {
         flex: '1 1 100%'

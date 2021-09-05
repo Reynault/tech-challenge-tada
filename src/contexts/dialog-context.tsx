@@ -8,13 +8,13 @@ export interface ModalContextProps {
   changeContent: (value: JSX.Element) => void;
 }
 
-export const DialogContext: React.Context<ModalContextProps> = React.createContext<
-  ModalContextProps
->({
-  showModal: null,
-  hideModal: null,
-  changeContent: null
-});
+export const DialogContext: React.Context<ModalContextProps> = React.createContext(
+  {
+    showModal: null,
+    hideModal: null,
+    changeContent: null
+  }
+);
 
 // Specific provider definition as a component
 export interface ModalProviderProps {

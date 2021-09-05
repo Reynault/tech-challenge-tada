@@ -1,5 +1,6 @@
 import { Box, Typography } from '@material-ui/core';
 import React from 'react';
+import { Display } from './display';
 
 export interface PageTitleProps {
   label: string;
@@ -11,7 +12,7 @@ export const PageTitle: React.FunctionComponent<PageTitleProps> = ({
   return (
     <Box p={3}>
       <Typography variant="h3" style={{ textAlign: 'center' }}>
-        {label}
+        <Display value={label} />
       </Typography>
     </Box>
   );

@@ -10,14 +10,14 @@ export interface ChallengeContextProps {
   getOne: (id: string) => ChallengeDto;
 }
 
-export const ChallengesContext: React.Context<ChallengeContextProps> = React.createContext<
-  ChallengeContextProps
->({
-  state: null,
-  dispatch: null,
-  isChallengesEmpty: null,
-  getOne: null
-});
+export const ChallengesContext: React.Context<ChallengeContextProps> = React.createContext(
+  {
+    state: null,
+    dispatch: null,
+    isChallengesEmpty: null,
+    getOne: null
+  }
+);
 
 // Specific provider definition as a component
 export interface ChallengeProviderProps {
