@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Routes } from '../../shared/constants/routes';
 
-const appTitleStyle = makeStyles({
-  withDecoration: {},
+const appTitleStyle = makeStyles(theme => ({
+  withDecoration: {
+    color: theme.palette.primary.main
+  },
   withoutDecoration: {
     textDecoration: 'none',
-    color: 'black'
+    color: 'white'
   }
-});
+}));
 
 export const AppTitle: React.FunctionComponent = () => {
   const [showUnderline, setShowUnderline] = useState(false);

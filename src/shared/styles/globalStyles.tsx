@@ -44,7 +44,18 @@ export const globalStyles = makeStyles(theme => ({
     width: '100%',
     marginBottom: '15px'
   },
-  thirdColor: {
-    backgroundColor: '#4caf50'
+  flexButtons: {
+    justifyContent: 'center',
+    display: 'flex',
+    gap: '5px',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'row !important',
+      flexWrap: 'wrap',
+      gap: '5px',
+      '& *': {
+        flex: '1 1 100%',
+        margin: '0px !important'
+      }
+    }
   }
 }));

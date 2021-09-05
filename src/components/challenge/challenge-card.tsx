@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardActions,
-  CardContent,
-  makeStyles,
-  Typography
-} from '@material-ui/core';
+import { Card, CardContent, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { Display } from '../shared/display';
@@ -21,25 +15,13 @@ const challengeCardStyles = makeStyles(theme => ({
       width: '90%',
       minWidth: '0px'
     }
-  },
-  cardButtons: {
-    justifyContent: 'center',
-    [theme.breakpoints.down('xs')]: {
-      flexDirection: 'row !important',
-      flexWrap: 'wrap',
-      gap: '5px',
-      '& *': {
-        flex: '1 1 100%',
-        margin: '0px !important'
-      }
-    }
   }
 }));
 
 export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
   challenge: ChallengeDto
 ) => {
-  const { root, cardButtons } = challengeCardStyles();
+  const { root } = challengeCardStyles();
   return (
     <Card className={root}>
       <CardContent>
@@ -52,9 +34,7 @@ export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
           <Display value={challenge?.description} />
         </Typography>
       </CardContent>
-      <CardActions className={cardButtons}>
-        <ManageOneChallengeButtons {...challenge} />
-      </CardActions>
+      <ManageOneChallengeButtons {...challenge} />
     </Card>
   );
 };

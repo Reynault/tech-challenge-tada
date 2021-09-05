@@ -1,4 +1,4 @@
-import { Box, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { GameContext } from '../../contexts/game-context';
 import { globalStyles } from '../../shared/styles/globalStyles';
@@ -18,29 +18,35 @@ const playStyle = makeStyles(theme => ({
     borderRadius: '4px',
     padding: '1%'
   },
+  typingZoneRibbon: {
+    textAlign: 'center',
+    width: '100%',
+    backgroundColor: 'rgba(0,0,0,0.4)'
+  },
   blurred: {
     animationDirection: 'reverse',
-    animation: 'blur 1s',
+    animation: 'blur 0.5s',
     filter: 'blur(4px)'
   },
   notBlurred: {
-    animation: 'blur 1s'
+    animation: 'blur 0.5s'
   }
 }));
 
 export const TypingZone: React.FunctionComponent = () => {
-  const {} = playStyle();
-
   const {
     typingZone,
     blurred,
     notBlurred,
     correctTypedText,
     incorrectTypedText,
-    decoratedText
+    decoratedText,
+    typingZoneRibbon
   } = playStyle();
   const { centeredElement } = globalStyles();
-  const { typedKey, textToType, launched, typeAKey } = useContext(GameContext);
+  const { typedKey, textToType, launched, typeAKey, launchGame } = useContext(
+    GameContext
+  );
   const [typedText, setTypedText] = useState(<></>);
 
   const handleKeyPress = useCallback(
@@ -81,15 +87,34 @@ export const TypingZone: React.FunctionComponent = () => {
       // remove when unmount or when new redefinition
       document.body.removeEventListener('keypress', handleKeyPress);
     };
-  }, [handleKeyPress, launched]);
+  }, [launched, handleKeyPress]);
+
+  // initial listener to launch a game
+  useEffect(() => {
+    if (!launched) {
+      document.body.addEventListener('keypress', launchGame);
+    }
+    return () => {
+      // remove when unmount or when new redefinition
+      document.body.removeEventListener('keypress', launchGame);
+    };
+  }, [launched, launchGame]);
 
   return (
-    <Box
-      className={`${typingZone} ${
-        launched ? notBlurred : blurred
-      } ${centeredElement}`}
-    >
-      <Typography variant="h5">
+    <Box>
+      <Button
+        disabled={launched}
+        onClick={() => launchGame()}
+        className={typingZoneRibbon}
+      >
+        Type a letter or click here to start the challenge
+      </Button>
+      <Typography
+        variant="h5"
+        className={`${typingZone} ${
+          launched ? notBlurred : blurred
+        } ${centeredElement}`}
+      >
         {typedText}
         {textToType}
       </Typography>

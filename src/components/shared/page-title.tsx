@@ -11,7 +11,7 @@ export const PageTitle: React.FunctionComponent<PageTitleProps> = ({
 }) => {
   return (
     <Box p={3}>
-      <Typography variant="h3" style={{ textAlign: 'center' }}>
+      <Typography variant="h4" style={{ textAlign: 'center' }}>
         <Display value={label} />
       </Typography>
     </Box>

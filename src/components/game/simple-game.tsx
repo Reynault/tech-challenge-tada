@@ -59,12 +59,12 @@ export const SimpleGame: React.FunctionComponent<SimpleGameProps> = ({
       <GameConfigurator text={challenge.text} />
       <PageTitle {...{ label: 'Type the text !' }} />
       <TypingZone />
-      <StateButtons />
       <DetailedScore
         bestScore={challenge.bestScore}
         score={{ time, error }}
         hasWon={hasWon}
       />
+      <StateButtons />
     </Container>
   );
 };

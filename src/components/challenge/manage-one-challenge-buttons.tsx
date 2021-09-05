@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import React, { useCallback, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { DialogContext } from '../../contexts/dialog-context';
@@ -12,7 +12,8 @@ export const ManageOneChallengeButtons: React.FunctionComponent<ChallengeDto> = 
   challenge: ChallengeDto
 ) => {
   const { showModal } = useContext(DialogContext);
-  const { thirdColor } = globalStyles();
+  const { flexButtons } = globalStyles();
+
   const openUpdateModal = useCallback(() => {
     showModal(<UpdateChallengeForm {...{ challenge }} />);
   }, [showModal, challenge]);
@@ -21,21 +22,20 @@ export const ManageOneChallengeButtons: React.FunctionComponent<ChallengeDto> = 
   }, [showModal, challenge]);
 
   return (
-    <>
+    <Box p={1} className={flexButtons}>
       <Button
-        variant="contained"
-        className={thirdColor}
+        variant="outlined"
         component={Link}
         to={`${Routes.PLAY_SELECTION}/${challenge.name}`}
       >
         Play
       </Button>
-      <Button onClick={openUpdateModal} color="primary" variant="contained">
+      <Button onClick={openUpdateModal} color="primary" variant="outlined">
         Update
       </Button>
-      <Button onClick={openDeleteModal} color="secondary" variant="contained">
+      <Button onClick={openDeleteModal} color="secondary" variant="outlined">
         Delete
-      </Button>
-    </>
+      </Button>{' '}
+    </Box>
   );
 };

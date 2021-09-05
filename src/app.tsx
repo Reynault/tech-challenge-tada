@@ -1,5 +1,6 @@
 import {
   CssBaseline,
+  responsiveFontSizes,
   ThemeProvider,
   unstable_createMuiStrictModeTheme
 } from '@material-ui/core';
@@ -14,7 +15,7 @@ import { PlayInGame } from './pages/play-in-game';
 import { PlaySelection } from './pages/play-selection';
 import { Routes } from './shared/constants/routes';
 
-const theme = unstable_createMuiStrictModeTheme({
+let theme = unstable_createMuiStrictModeTheme({
   palette: {
     type: 'dark',
     primary: {
@@ -25,6 +26,7 @@ const theme = unstable_createMuiStrictModeTheme({
     }
   }
 });
+theme = responsiveFontSizes(theme);
 
 export const App: React.FunctionComponent = () => {
   return (

@@ -13,9 +13,8 @@ const appTitleStyle = makeStyles({
     transform: 'translate(-50%, -50%)',
     zIndex: 2,
     width: '100%',
-    paddingBottom: '20px',
     textAlign: 'center',
-    boxShadow: '0px 0px 15px black',
+    boxShadow: '0px 0px 16px black',
     animation: 'fadeInTitle 0.5s'
   }
 });
@@ -31,7 +30,9 @@ export const LandingAppTitle: React.FunctionComponent<LandingAppTitleProps> = ({
   return (
     <>
       <LandingBackground />
-      <Box className={appTitle}>{children}</Box>
+      <Box p={2} className={appTitle}>
+        {children}
+      </Box>
     </>
   );
 };

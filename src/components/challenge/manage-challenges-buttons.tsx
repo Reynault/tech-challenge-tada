@@ -1,4 +1,4 @@
-import { Box, Fab, makeStyles } from '@material-ui/core';
+import { Box, Fab, makeStyles, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useCallback, useContext } from 'react';
@@ -31,22 +31,26 @@ export const ManageChallengesButtons: React.FunctionComponent = () => {
   }, [showModal]);
   return (
     <Box className={favGroup}>
-      <Fab
-        className={fav}
-        color="primary"
-        aria-label="add"
-        onClick={openCreateModal}
-      >
-        <AddIcon />
-      </Fab>
-      <Fab
-        onClick={openDeleteModal}
-        className={fav}
-        color="secondary"
-        aria-label="remove"
-      >
-        <DeleteIcon />
-      </Fab>
+      <Tooltip title="Add a challenge" aria-label="add">
+        <Fab
+          className={fav}
+          color="primary"
+          aria-label="add"
+          onClick={openCreateModal}
+        >
+          <AddIcon />
+        </Fab>
+      </Tooltip>
+      <Tooltip title="Delete all challenges" aria-label="add">
+        <Fab
+          onClick={openDeleteModal}
+          className={fav}
+          color="secondary"
+          aria-label="remove"
+        >
+          <DeleteIcon />
+        </Fab>
+      </Tooltip>
     </Box>
   );
 };

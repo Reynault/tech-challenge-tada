@@ -6,25 +6,17 @@ import { Routes } from '../../shared/constants/routes';
 import { globalStyles } from '../../shared/styles/globalStyles';
 
 export const StateButtons: React.FunctionComponent = () => {
-  const { centeredElement } = globalStyles();
-  const { resetGame, launchGame, launched } = useContext(GameContext);
+  const { flexButtons } = globalStyles();
+  const { resetGame, launched } = useContext(GameContext);
   return (
-    <Box className={centeredElement}>
-      <Button
-        disabled={launched}
-        onClick={() => launchGame()}
-        color={'primary'}
-        variant={'outlined'}
-      >
-        Start
-      </Button>
+    <Box p={2} className={flexButtons}>
       <Button
         disabled={!launched}
         onClick={() => resetGame()}
         color={'primary'}
         variant={'outlined'}
       >
-        Reset
+        Reset the game
       </Button>
       <Button
         component={Link}
