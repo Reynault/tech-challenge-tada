@@ -2,26 +2,26 @@
 import React, { useCallback, useState } from 'react';
 import { SimpleDialog } from '../components/shared/simple-dialog';
 
-export interface ModalContextProps {
-  showModal: (value: JSX.Element) => void;
-  hideModal: () => void;
+export interface DialogContextProps {
+  showDialog: (value: JSX.Element) => void;
+  hideDialog: () => void;
   changeContent: (value: JSX.Element) => void;
 }
 
-export const DialogContext: React.Context<ModalContextProps> = React.createContext(
+export const DialogContext: React.Context<DialogContextProps> = React.createContext(
   {
-    showModal: null,
-    hideModal: null,
+    showDialog: null,
+    hideDialog: null,
     changeContent: null
   }
 );
 
 // Specific provider definition as a component
-export interface ModalProviderProps {
+export interface DialogProviderProps {
   children: JSX.Element;
 }
 
-export const ModalProvider: React.FunctionComponent<ModalProviderProps> = ({
+export const DialogProvider: React.FunctionComponent<DialogProviderProps> = ({
   children
 }) => {
   const [open, setOpen] = useState(false);
@@ -32,19 +32,19 @@ export const ModalProvider: React.FunctionComponent<ModalProviderProps> = ({
     },
     [setModalContent]
   );
-  const showModal = useCallback(
+  const showDialog = useCallback(
     (content: JSX.Element) => {
       changeContent(content);
       setOpen(true);
     },
     [changeContent, setOpen]
   );
-  const hideModal = useCallback(() => {
+  const hideDialog = useCallback(() => {
     changeContent(<></>);
     setOpen(false);
-  }, [setOpen]);
+  }, [changeContent, setOpen]);
   return (
-    <DialogContext.Provider value={{ showModal, hideModal, changeContent }}>
+    <DialogContext.Provider value={{ showDialog, hideDialog, changeContent }}>
       <SimpleDialog {...{ open, setOpen }}>{modalContent}</SimpleDialog>
       {children}
     </DialogContext.Provider>

@@ -8,19 +8,22 @@ import { globalStyles } from '../../shared/styles/globalStyles';
 import { DeleteChallengeForm } from '../form/delete-challenge-form';
 import { UpdateChallengeForm } from '../form/update-challenge-form';
 
-export const ManageOneChallengeButtons: React.FunctionComponent<ChallengeDto> = (
-  challenge: ChallengeDto
-) => {
-  const { showModal } = useContext(DialogContext);
+export interface ManageOneChallengeButtons {
+  challenge: ChallengeDto;
+}
+
+export const ManageOneChallengeButtons: React.FunctionComponent<ManageOneChallengeButtons> = ({
+  challenge
+}) => {
+  const { showDialog } = useContext(DialogContext);
   const { flexButtons } = globalStyles();
 
   const openUpdateModal = useCallback(() => {
-    showModal(<UpdateChallengeForm {...{ challenge }} />);
-  }, [showModal, challenge]);
+    showDialog(<UpdateChallengeForm {...{ challenge }} />);
+  }, [showDialog, challenge]);
   const openDeleteModal = useCallback(() => {
-    showModal(<DeleteChallengeForm {...{ challenge }} />);
-  }, [showModal, challenge]);
-
+    showDialog(<DeleteChallengeForm {...{ challenge }} />);
+  }, [showDialog, challenge]);
   return (
     <Box p={1} className={flexButtons}>
       <Button
@@ -35,7 +38,7 @@ export const ManageOneChallengeButtons: React.FunctionComponent<ChallengeDto> = 
       </Button>
       <Button onClick={openDeleteModal} color="secondary" variant="outlined">
         Delete
-      </Button>{' '}
+      </Button>
     </Box>
   );
 };

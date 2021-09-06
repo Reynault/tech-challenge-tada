@@ -21,6 +21,6 @@ export const Stars: React.FunctionComponent<DifficultyProps> = ({
       stars.push(<StarIcon key={j} />);
     }
     return stars;
-  }, [value]);
+  }, [maximalNumberOfStars, value]);
   return <Box>{displayStars()}</Box>;
 };

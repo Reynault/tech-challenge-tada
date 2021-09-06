@@ -1,19 +1,15 @@
-import { Container } from '@material-ui/core';
-import React, { useContext, useEffect, useState } from 'react';
+import { Box, Container, Typography } from '@material-ui/core';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ChallengesContext } from '../../contexts/challenges/challenges-context';
-import { ChallengeActionType } from '../../contexts/challenges/challenges-reducer';
-import { GameContext } from '../../contexts/game-context';
-import { TimerContext } from '../../contexts/timer-context';
 import { ChallengeDto, ScoreDto } from '../../shared/dto/challenge-dto';
 import { PageTitle } from '../shared/page-title';
-import { DetailedScore } from './detailed-score';
-import { GameConfigurator } from './game-configurator';
 import { StateButtons } from './state-buttons';
 import { TypingZone } from './typing-zone';
-
-const isBestScore = (best: ScoreDto, score: ScoreDto): boolean => {
-  return !best || (best.error >= score.error && best.time >= score.time);
-};
+import { GameContext } from '../../contexts/game-context';
+import { Timer } from '../shared/timer';
+import { TimeDisplay } from '../shared/time-display';
+import { globalStyles } from '../../shared/styles/globalStyles';
+import { ChallengeActionType } from '../../contexts/challenges/challenges-reducer';
 
 export interface SimpleGameProps {
   challenge: ChallengeDto;
@@ -22,48 +18,72 @@ export interface SimpleGameProps {
 export const SimpleGame: React.FunctionComponent<SimpleGameProps> = ({
   challenge
 }) => {
-  const { dispatch } = useContext(ChallengesContext);
-  const { time } = useContext(TimerContext);
-  const { error, finished } = useContext(GameContext);
+  const { centeredElement } = globalStyles();
+  const { error, finished, launched, startingTime } = useContext(GameContext);
   const [hasWon, setHasWon] = useState(false);
+  const [newChallenge, setNewChallenge] = useState(challenge);
+  const { dispatch } = useContext(ChallengesContext);
 
-  // determine what to do when a game is finished
+  const isBestScore = useCallback(
+    (best: ScoreDto, score: ScoreDto): boolean => {
+      return !best || (best.error >= score.error && best.time >= score.time);
+    },
+    []
+  );
+
   useEffect(() => {
     if (finished) {
-      const score = {
-        time,
-        error
-      };
-      if (isBestScore(challenge?.bestScore, score)) {
-        const newChallenge = Object.assign({}, challenge);
-        newChallenge.bestScore = {
-          time,
-          error
-        };
-
+      const time = Date.now() - startingTime;
+      if (isBestScore(newChallenge?.bestScore, { time, error })) {
+        setNewChallenge(previousChallenge => {
+          return Object.assign(previousChallenge, {
+            bestScore: { time, error }
+          });
+        });
         dispatch({
           type: ChallengeActionType.PUT,
           payload: newChallenge,
-          old: challenge
+          old: newChallenge
         });
-
         setHasWon(true);
       } else {
         setHasWon(false);
       }
     }
-  }, [finished, setHasWon]);
+  }, [
+    newChallenge,
+    launched,
+    startingTime,
+    isBestScore,
+    error,
+    finished,
+    setHasWon,
+    dispatch
+  ]);
 
   return (
     <Container>
-      <GameConfigurator text={challenge.text} />
       <PageTitle {...{ label: 'Type the text !' }} />
       <TypingZone />
-      <DetailedScore
-        bestScore={challenge.bestScore}
-        score={{ time, error }}
-        hasWon={hasWon}
-      />
+      <Box className={centeredElement} p={2}>
+        <Box>
+          <Typography variant="h4">Score</Typography>
+          <Typography variant="body1">
+            Time: <Timer start={launched} startingTime={startingTime} />
+          </Typography>
+          <Typography variant="body1">Errors: {error}</Typography>
+        </Box>
+        <Box>
+          <Typography variant="h4">Best score</Typography>
+          <Typography variant="body1" color={hasWon ? 'primary' : 'initial'}>
+            Time: <TimeDisplay time={newChallenge?.bestScore?.time} />
+          </Typography>
+          <Typography variant="body1" color={hasWon ? 'primary' : 'initial'}>
+            Errors:{' '}
+            {!!newChallenge?.bestScore ? newChallenge.bestScore.error : '--'}
+          </Typography>
+        </Box>
+      </Box>
       <StateButtons />
     </Container>
   );

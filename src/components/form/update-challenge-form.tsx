@@ -29,7 +29,7 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
   const { centeredElement, spacedInput } = globalStyles();
 
   const { dispatch, getOne } = useContext(ChallengesContext);
-  const { hideModal } = useContext(DialogContext);
+  const { hideDialog } = useContext(DialogContext);
 
   const [name, setName] = useState(!!challenge?.name ? challenge.name : '');
   const [description, setDescription] = useState(
@@ -83,13 +83,24 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
             }
           });
         }
-        hideModal();
+        hideDialog();
       } else {
         setAlreadyExists(true);
       }
       setValidating(false);
     },
-    [name, description, difficulty, text, validating]
+    [
+      setValidating,
+      challenge,
+      getOne,
+      dispatch,
+      name,
+      description,
+      difficulty,
+      text,
+      hideDialog,
+      setAlreadyExists
+    ]
   );
 
   return (

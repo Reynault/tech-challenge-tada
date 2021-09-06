@@ -1,5 +1,6 @@
 import { Card, CardContent, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
+import { DialogProvider } from '../../contexts/dialog-context';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
 import { Display } from '../shared/display';
 import { Score } from '../shared/score';
@@ -34,7 +35,9 @@ export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
           <Display value={challenge?.description} />
         </Typography>
       </CardContent>
-      <ManageOneChallengeButtons {...challenge} />
+      <DialogProvider>
+        <ManageOneChallengeButtons {...{ challenge }} />
+      </DialogProvider>
     </Card>
   );
 };

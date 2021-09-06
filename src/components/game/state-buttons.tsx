@@ -12,7 +12,7 @@ export const StateButtons: React.FunctionComponent = () => {
     <Box p={2} className={flexButtons}>
       <Button
         disabled={!launched}
-        onClick={() => resetGame()}
+        onClick={resetGame}
         color={'primary'}
         variant={'outlined'}
       >

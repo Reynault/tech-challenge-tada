@@ -52,9 +52,14 @@ export const TypingZone: React.FunctionComponent = () => {
     decoratedText,
     typingZoneRibbon
   } = playStyle();
-  const { typedKey, textToType, launched, typeAKey, launchGame } = useContext(
-    GameContext
-  );
+  const {
+    typedKey,
+    textToType,
+    launched,
+    finished,
+    typeAKey,
+    launchGame
+  } = useContext(GameContext);
   const [typedText, setTypedText] = useState(<></>);
 
   const handleKeyPress = useCallback(
@@ -64,29 +69,51 @@ export const TypingZone: React.FunctionComponent = () => {
     [typeAKey]
   );
 
-  useEffect(() => {
+  const clearTextAndLaunchGame = useCallback(() => {
     setTypedText(<></>);
-  }, [textToType]);
+    launchGame();
+  }, [setTypedText, launchGame]);
+
+  const launchGameByTyping = useCallback(
+    event => {
+      clearTextAndLaunchGame();
+      typeAKey(event.key);
+    },
+    [clearTextAndLaunchGame, typeAKey]
+  );
+
+  useEffect(() => {
+    if (!launched && !finished) {
+      setTypedText(<></>);
+    }
+  }, [launched, finished]);
 
   useEffect(() => {
     if (!!typedKey) {
-      setTypedText(
-        <>
-          {typedText}
-          <span
-            className={`${
-              typedKey.isValid ? correctTypedText : incorrectTypedText
-            } ${decoratedText}`}
-          >
-            {typedKey.key}
-          </span>
-        </>
-      );
+      setTypedText(typedText => {
+        return (
+          <>
+            {typedText}
+            <span
+              className={`${
+                typedKey.isValid ? correctTypedText : incorrectTypedText
+              } ${decoratedText}`}
+            >
+              {typedKey.key}
+            </span>
+          </>
+        );
+      });
     }
-  }, [typedKey]);
+  }, [
+    typedKey,
+    setTypedText,
+    correctTypedText,
+    incorrectTypedText,
+    decoratedText
+  ]);
 
-  // when listener is redefined, adding that listener
-  // to key press event
+  // listeners used to type a key
   useEffect(() => {
     if (launched) {
       document.body.addEventListener('keypress', handleKeyPress);
@@ -96,14 +123,6 @@ export const TypingZone: React.FunctionComponent = () => {
       document.body.removeEventListener('keypress', handleKeyPress);
     };
   }, [launched, handleKeyPress]);
-
-  const launchGameByTyping = useCallback(
-    event => {
-      launchGame();
-      typeAKey(event.key);
-    },
-    [launchGame, typeAKey]
-  );
 
   // initial listener to launch a game
   useEffect(() => {
@@ -120,7 +139,7 @@ export const TypingZone: React.FunctionComponent = () => {
     <Box>
       <Button
         disabled={launched}
-        onClick={() => launchGame()}
+        onClick={clearTextAndLaunchGame}
         className={typingZoneRibbon}
       >
         Type the first letter or click here to start the challenge

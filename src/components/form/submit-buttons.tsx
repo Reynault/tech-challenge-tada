@@ -3,10 +3,10 @@ import React, { useContext } from 'react';
 import { DialogContext } from '../../contexts/dialog-context';
 
 export const SubmitButtons: React.FunctionComponent = () => {
-  const { hideModal } = useContext(DialogContext);
+  const { hideDialog } = useContext(DialogContext);
   return (
     <>
-      <Button onClick={hideModal} color="secondary" variant="contained">
+      <Button onClick={hideDialog} color="secondary" variant="contained">
         Cancel
       </Button>
       <Button type="submit" color="primary" variant="contained">

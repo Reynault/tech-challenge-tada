@@ -1,5 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { TimerContext } from './timer-context';
+import React, { useCallback, useEffect, useState } from 'react';
 
 export interface TypedKey {
   key: string;
@@ -13,9 +12,9 @@ export interface GameContextProps {
   typeAKey: (key: string) => void;
   typedKey: TypedKey;
   textToType: string;
-  setChallengeText: (text: string) => void;
-  error: number;
   finished: boolean;
+  error: number;
+  startingTime: number;
 }
 
 export const GameContext: React.Context<GameContextProps> = React.createContext(
@@ -26,55 +25,47 @@ export const GameContext: React.Context<GameContextProps> = React.createContext(
     typedKey: null,
     textToType: null,
     typeAKey: null,
-    setChallengeText: null,
+    finished: null,
     error: null,
-    finished: null
+    startingTime: null
   }
 );
 
 export interface GameProviderProps {
   children: JSX.Element;
+  initialText: string;
 }
 
 export const GameProvider: React.FunctionComponent<GameProviderProps> = ({
-  children
+  children,
+  initialText
 }) => {
-  const { start, reset, stop } = useContext(TimerContext);
-
-  const [initialText, setInitialText] = useState('');
+  // given properties
   const [typedKey, setTypedKey] = useState(null);
-  const [textToType, setTextToType] = useState('');
-
-  const [launched, setLaunched] = useState(false);
-  const [finished, setFinished] = useState(false);
+  const [textToType, setTextToType] = useState(initialText);
   const [error, setError] = useState(0);
+  const [finished, setFinished] = useState(false);
+  const [launched, setLaunched] = useState(false);
+  const [startingTime, setStartingTime] = useState(0);
 
+  // typed key queue use to store pending keys
   const [keyQueue, setKeyQueue] = useState([]);
-
+  // boolean used to check whether a key is already being treated or not
   const [alreadyTyping, setAlreadyTyping] = useState(false);
-
-  const setChallengeText = useCallback(
-    (text: string) => {
-      setInitialText(text);
-      setTextToType(text);
-    },
-    [setInitialText, setTextToType]
-  );
 
   const resetGame = useCallback(() => {
     setLaunched(false);
-    reset();
     setError(0);
     setTypedKey(null);
     setTextToType(initialText);
-  }, [setLaunched, reset, setError, setTypedKey, setTextToType, initialText]);
+  }, [setLaunched, setError, setTypedKey, setTextToType, initialText]);
 
   const launchGame = useCallback(() => {
     resetGame();
     setFinished(false);
     setLaunched(true);
-    start();
-  }, [launched, resetGame]);
+    setStartingTime(Date.now());
+  }, [resetGame]);
 
   // validate a key given by the user
   const validateAKey = useCallback(
@@ -85,27 +76,23 @@ export const GameProvider: React.FunctionComponent<GameProviderProps> = ({
         setTypedKey({ key: keyToType, isValid: true });
       } else {
         setTypedKey({ key: keyToType, isValid: false });
-        setError(error + 1);
+        setError(error => error + 1);
       }
       const remainingCharacters: string = textToType.substring(1);
       setTextToType(remainingCharacters);
       if (!remainingCharacters) {
         setLaunched(false);
         setFinished(true);
-        stop();
       }
       setAlreadyTyping(false);
     },
     [
       setError,
-      error,
       setTypedKey,
       textToType,
       setTextToType,
-      alreadyTyping,
       setAlreadyTyping,
-      setFinished,
-      stop
+      setFinished
     ]
   );
 
@@ -119,15 +106,14 @@ export const GameProvider: React.FunctionComponent<GameProviderProps> = ({
 
   useEffect(() => {
     // after each key given by the user or when the component is ready
-    // we consume one key from the queue that stored pending inputs given by
-    // the user
-    // it is to make sure that we handle every input from the user
+    // we consume one key from the queue that is storing pending inputs given by
+    // the user. it is to make sure that we handle every input from the user.
     if (launched && !alreadyTyping && keyQueue.length > 0) {
       const nextEventToConsume = keyQueue.shift();
       setKeyQueue(keyQueue.splice(1));
       validateAKey(nextEventToConsume);
     }
-  }, [alreadyTyping, typeAKey]);
+  }, [alreadyTyping, typeAKey, keyQueue, launched, validateAKey]);
 
   return (
     <GameContext.Provider
@@ -138,9 +124,9 @@ export const GameProvider: React.FunctionComponent<GameProviderProps> = ({
         typedKey,
         textToType,
         typeAKey,
-        error,
         finished,
-        setChallengeText
+        error,
+        startingTime
       }}
     >
       {children}

@@ -18,7 +18,7 @@ export const DeleteChallengeForm: React.FunctionComponent<DeleteChallengeFormPro
   const { centeredElement } = globalStyles();
 
   const { dispatch } = useContext(ChallengesContext);
-  const { hideModal } = useContext(DialogContext);
+  const { hideDialog } = useContext(DialogContext);
 
   const deleteProcedure = useCallback(() => {
     if (!!challenge) {
@@ -26,8 +26,8 @@ export const DeleteChallengeForm: React.FunctionComponent<DeleteChallengeFormPro
     } else {
       dispatch({ type: ChallengeActionType.DELETE_ALL });
     }
-    hideModal();
-  }, [dispatch, hideModal]);
+    hideDialog();
+  }, [challenge, dispatch, hideDialog]);
 
   return (
     <form onSubmit={deleteProcedure}>

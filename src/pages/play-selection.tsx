@@ -6,6 +6,7 @@ import { ManageChallengesButtons } from '../components/challenge/manage-challeng
 import { PopulateChallengesButton } from '../components/challenge/populate-challenges-button';
 import { PageTitle } from '../components/shared/page-title';
 import { ChallengesContext } from '../contexts/challenges/challenges-context';
+import { DialogProvider } from '../contexts/dialog-context';
 import { globalStyles } from '../shared/styles/globalStyles';
 
 export const PlaySelection: React.FunctionComponent = () => {
@@ -24,7 +25,9 @@ export const PlaySelection: React.FunctionComponent = () => {
       ) : (
         <PopulateChallengesButton />
       )}
-      <ManageChallengesButtons />
+      <DialogProvider>
+        <ManageChallengesButtons />
+      </DialogProvider>
     </Container>
   );
 };

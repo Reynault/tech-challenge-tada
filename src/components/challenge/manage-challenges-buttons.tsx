@@ -21,14 +21,15 @@ const buttonsStyle = makeStyles({
 
 export const ManageChallengesButtons: React.FunctionComponent = () => {
   const { fav, favGroup } = buttonsStyle();
-  const { showModal } = useContext(DialogContext);
+  const { showDialog } = useContext(DialogContext);
 
   const openCreateModal = useCallback(() => {
-    showModal(<UpdateChallengeForm />);
-  }, [showModal]);
+    showDialog(<UpdateChallengeForm />);
+  }, [showDialog]);
   const openDeleteModal = useCallback(() => {
-    showModal(<DeleteChallengeForm />);
-  }, [showModal]);
+    showDialog(<DeleteChallengeForm />);
+  }, [showDialog]);
+
   return (
     <Box className={favGroup}>
       <Tooltip title="Add a challenge" aria-label="add">
