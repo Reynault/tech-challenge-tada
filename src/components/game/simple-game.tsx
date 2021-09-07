@@ -5,7 +5,7 @@ import { ChallengeDto, ScoreDto } from '../../shared/dto/challenge-dto';
 import { PageTitle } from '../shared/page-title';
 import { StateButtons } from './state-buttons';
 import { TypingZone } from './typing-zone';
-import { GameContext } from '../../contexts/game-context';
+import { GameContext } from '../../contexts/games/game-context';
 import { Timer } from '../shared/timer';
 import { TimeDisplay } from '../shared/time-display';
 import { globalStyles } from '../../shared/styles/globalStyles';
@@ -23,7 +23,7 @@ export const SimpleGame: React.FunctionComponent<SimpleGameProps> = ({
   challenge
 }) => {
   const { centeredElement } = globalStyles();
-  const { error, finished, launched, startingTime } = useContext(GameContext);
+  const { state } = useContext(GameContext);
   // when finished, define if has won or not
   const [hasWon, setHasWon] = useState(false);
   // new challenge with new score
@@ -43,12 +43,12 @@ export const SimpleGame: React.FunctionComponent<SimpleGameProps> = ({
    * score and check if it is better than the best one and replace it
    */
   useEffect(() => {
-    if (finished) {
-      const time = Date.now() - startingTime;
-      if (isBestScore(newChallenge?.bestScore, { time, error })) {
+    if (state.finished) {
+      const time = Date.now() - state.startingTime;
+      if (isBestScore(newChallenge?.bestScore, { time, error: state.error })) {
         setNewChallenge(previousChallenge => {
           return Object.assign(previousChallenge, {
-            bestScore: { time, error }
+            bestScore: { time, error: state.error }
           });
         });
         dispatch({
@@ -61,16 +61,7 @@ export const SimpleGame: React.FunctionComponent<SimpleGameProps> = ({
         setHasWon(false);
       }
     }
-  }, [
-    newChallenge,
-    launched,
-    startingTime,
-    isBestScore,
-    error,
-    finished,
-    setHasWon,
-    dispatch
-  ]);
+  }, [newChallenge, isBestScore, setHasWon, dispatch, state]);
 
   return (
     <Container>
@@ -86,9 +77,10 @@ export const SimpleGame: React.FunctionComponent<SimpleGameProps> = ({
               timer exported into a component, to avoir re-rendering when
               time is changing (every milliseconds)
             */}
-            Time: <Timer start={launched} startingTime={startingTime} />
+            Time:{' '}
+            <Timer start={state.launched} startingTime={state.startingTime} />
           </Typography>
-          <Typography variant="body1">Errors: {error}</Typography>
+          <Typography variant="body1">Errors: {state.error}</Typography>
         </Box>
         {/* best score */}
         <Box>

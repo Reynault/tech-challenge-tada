@@ -1,6 +1,6 @@
 import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { GameContext } from '../../contexts/game-context';
+import { GameContext } from '../../contexts/games/game-context';
 
 const playStyle = makeStyles(theme => ({
   correctTypedText: {
@@ -44,6 +44,7 @@ const playStyle = makeStyles(theme => ({
  * Component used to display and manage a typing zone
  */
 export const TypingZone: React.FunctionComponent = () => {
+  console.log('oui ?');
   const {
     typingZone,
     textTypingZone,
@@ -56,14 +57,7 @@ export const TypingZone: React.FunctionComponent = () => {
     typingZoneRibbon
   } = playStyle();
   // using game context
-  const {
-    typedKey,
-    textToType,
-    launched,
-    finished,
-    typeAKey,
-    launchGame
-  } = useContext(GameContext);
+  const { state, typeAKey, launchGame } = useContext(GameContext);
   // decorated typed text (with <span></span> for correct and incorrect characters)
   const [typedText, setTypedText] = useState(<></>);
   /**
@@ -99,10 +93,10 @@ export const TypingZone: React.FunctionComponent = () => {
    * for the new game)
    */
   useEffect(() => {
-    if (!launched && !finished) {
+    if (!state.launched && !state.finished) {
       setTypedText(<></>);
     }
-  }, [launched, finished]);
+  }, [state]);
   /**
    * use effect used to handle when the typed key is changed. You might wonder
    * why I didn't used a simple callback to do that. It is because of a behavior
@@ -111,7 +105,7 @@ export const TypingZone: React.FunctionComponent = () => {
    * which leads to an inconsistency in the game state. (a key typed twice for example)
    */
   useEffect(() => {
-    if (!!typedKey) {
+    if (!!state.typedKey) {
       // adding the new key to the typed text
       setTypedText(typedText => {
         return (
@@ -123,17 +117,17 @@ export const TypingZone: React.FunctionComponent = () => {
             */}
             <span
               className={`${
-                typedKey.isValid ? correctTypedText : incorrectTypedText
+                state.typedKey.isValid ? correctTypedText : incorrectTypedText
               } ${decoratedText}`}
             >
-              {typedKey.key}
+              {state.typedKey.key}
             </span>
           </>
         );
       });
     }
   }, [
-    typedKey,
+    state,
     setTypedText,
     correctTypedText,
     incorrectTypedText,
@@ -145,14 +139,14 @@ export const TypingZone: React.FunctionComponent = () => {
    * It is reassigned when the callback method is re-memoized
    */
   useEffect(() => {
-    if (launched) {
+    if (state.launched) {
       document.body.addEventListener('keypress', handleKeyPress);
     }
     return () => {
       // remove when unmount or when new redefinition (last value)
       document.body.removeEventListener('keypress', handleKeyPress);
     };
-  }, [launched, handleKeyPress]);
+  }, [state, handleKeyPress]);
   /**
    * use effect used to add a callback to a listener on the key press event
    * when initializing a new game.
@@ -160,19 +154,19 @@ export const TypingZone: React.FunctionComponent = () => {
    * It is reassigned when the callback method is re-memoized
    */
   useEffect(() => {
-    if (!launched) {
+    if (!state.launched) {
       document.body.addEventListener('keypress', launchGameByTyping);
     }
     return () => {
       // remove when unmount or when new redefinition
       document.body.removeEventListener('keypress', launchGameByTyping);
     };
-  }, [launched, launchGameByTyping]);
+  }, [state, launchGameByTyping]);
   return (
     <Box>
       {/* button used to start typing */}
       <Button
-        disabled={launched}
+        disabled={state.launched}
         onClick={clearTextAndLaunchGame}
         className={typingZoneRibbon}
       >
@@ -197,7 +191,7 @@ export const TypingZone: React.FunctionComponent = () => {
           variant="h5"
           className={`${leftTypingZone} ${textTypingZone}`}
         >
-          {textToType}
+          {state.textToType}
         </Typography>
       </Box>
     </Box>
