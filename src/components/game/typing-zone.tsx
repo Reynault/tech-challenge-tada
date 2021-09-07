@@ -126,8 +126,7 @@ export const TypingZone: React.FunctionComponent = () => {
   }, [state.launched, state.finished]);
   /**
    * use effect used to handle when the typed key is changed. You might wonder
-   * why I didn't used a simple callback to do that. It is because of a behavior
-   * explained in the Game context. It's mainly due to the fact that when a user
+   * why I didn't used a simple callback to do that. It's mainly due to the fact that when a user
    * is typing really fast, the callback used to type a key might be called twice
    * which leads to an inconsistency in the game state. (a key typed twice for example)
    */
