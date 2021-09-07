@@ -44,7 +44,6 @@ const playStyle = makeStyles(theme => ({
  * Component used to display and manage a typing zone
  */
 export const TypingZone: React.FunctionComponent = () => {
-  console.log('oui ?');
   const {
     typingZone,
     textTypingZone,
@@ -96,7 +95,7 @@ export const TypingZone: React.FunctionComponent = () => {
     if (!state.launched && !state.finished) {
       setTypedText(<></>);
     }
-  }, [state]);
+  }, [state.launched, state.finished]);
   /**
    * use effect used to handle when the typed key is changed. You might wonder
    * why I didn't used a simple callback to do that. It is because of a behavior
@@ -127,7 +126,7 @@ export const TypingZone: React.FunctionComponent = () => {
       });
     }
   }, [
-    state,
+    state.typedKey,
     setTypedText,
     correctTypedText,
     incorrectTypedText,
@@ -146,7 +145,7 @@ export const TypingZone: React.FunctionComponent = () => {
       // remove when unmount or when new redefinition (last value)
       document.body.removeEventListener('keypress', handleKeyPress);
     };
-  }, [state, handleKeyPress]);
+  }, [state.launched, handleKeyPress]);
   /**
    * use effect used to add a callback to a listener on the key press event
    * when initializing a new game.
@@ -161,7 +160,7 @@ export const TypingZone: React.FunctionComponent = () => {
       // remove when unmount or when new redefinition
       document.body.removeEventListener('keypress', launchGameByTyping);
     };
-  }, [state, launchGameByTyping]);
+  }, [state.launched, launchGameByTyping]);
   return (
     <Box>
       {/* button used to start typing */}
