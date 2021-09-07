@@ -19,14 +19,19 @@ const buttonsStyle = makeStyles({
   }
 });
 
+/**
+ * Buttons used to manage the list of challenges (insert and delete all)
+ */
 export const ManageChallengesButtons: React.FunctionComponent = () => {
   const { fav, favGroup } = buttonsStyle();
+  // dialog context that provides a method to show it
   const { showDialog } = useContext(DialogContext);
-
-  const openCreateModal = useCallback(() => {
+  // dialog to create a challenge
+  const openCreateDialog = useCallback(() => {
     showDialog(<UpdateChallengeForm />);
   }, [showDialog]);
-  const openDeleteModal = useCallback(() => {
+  // dialog to delete all challenges
+  const openDeleteDialog = useCallback(() => {
     showDialog(<DeleteChallengeForm />);
   }, [showDialog]);
 
@@ -37,14 +42,14 @@ export const ManageChallengesButtons: React.FunctionComponent = () => {
           className={fav}
           color="primary"
           aria-label="add"
-          onClick={openCreateModal}
+          onClick={openCreateDialog}
         >
           <AddIcon />
         </Fab>
       </Tooltip>
       <Tooltip title="Delete all challenges" aria-label="add">
         <Fab
-          onClick={openDeleteModal}
+          onClick={openDeleteDialog}
           className={fav}
           color="secondary"
           aria-label="remove"

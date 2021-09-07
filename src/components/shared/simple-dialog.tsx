@@ -15,6 +15,12 @@ export interface SimpleModalProps {
   setOpen: (state: boolean) => void;
 }
 
+/**
+ * Component that add a layer of logic on a dialog given by material UI
+ * @param children to display
+ * @param open a state used to indicate that the dialog must be open
+ * @param setOpen setter of open
+ */
 export const SimpleDialog: React.FunctionComponent<SimpleModalProps> = ({
   children,
   open,
@@ -25,6 +31,7 @@ export const SimpleDialog: React.FunctionComponent<SimpleModalProps> = ({
     setOpen(false);
   };
   const theme = useTheme();
+  // is used to set the dialog at fullscreen when on smaller screens
   const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
   return (
     <Dialog

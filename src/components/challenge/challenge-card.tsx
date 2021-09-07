@@ -19,6 +19,10 @@ const challengeCardStyles = makeStyles(theme => ({
   }
 }));
 
+/**
+ * Card that display a challenge
+ * @param challenge to display
+ */
 export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
   challenge: ChallengeDto
 ) => {
@@ -35,6 +39,7 @@ export const ChallengeCard: React.FunctionComponent<ChallengeDto> = (
           <Display value={challenge?.description} />
         </Typography>
       </CardContent>
+      {/* buttons used to manage that challenge with a dialog context */}
       <DialogProvider>
         <ManageOneChallengeButtons {...{ challenge }} />
       </DialogProvider>

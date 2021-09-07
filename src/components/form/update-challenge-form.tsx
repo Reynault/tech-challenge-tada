@@ -23,20 +23,31 @@ export interface UpdateChallengeFormProps {
   challenge?: ChallengeDto;
 }
 
+/**
+ * Form used to update a challenge
+ * @param challenge to update
+ */
 export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormProps> = ({
   challenge
 }) => {
+  // style and contexts
   const { centeredElement, spacedInput } = globalStyles();
-
   const { dispatch, getOne } = useContext(ChallengesContext);
   const { hideDialog } = useContext(DialogContext);
-
+  // setting fields to set
   const [name, setName] = useState(!!challenge?.name ? challenge.name : '');
   const [description, setDescription] = useState(
     !!challenge?.description ? challenge.description : ''
   );
   const [text, setText] = useState(!!challenge?.text ? challenge.text : '');
+  const [difficulty, setDifficulty] = useState(
+    !!challenge?.difficulty ? challenge.difficulty : 1
+  );
+  // when validating
   const [invalidText, setInvalidText] = useState(false);
+  const [alreadyExists, setAlreadyExists] = useState(false);
+  const [validating, setValidating] = useState(false);
+  // callback used to test the given text
   const checkText = useCallback(
     (newText: string) => {
       const format = /[\n\r\t]/;
@@ -48,18 +59,13 @@ export const UpdateChallengeForm: React.FunctionComponent<UpdateChallengeFormPro
     },
     [setText, setInvalidText]
   );
-  const [difficulty, setDifficulty] = useState(
-    !!challenge?.difficulty ? challenge.difficulty : 1
-  );
-
-  const [alreadyExists, setAlreadyExists] = useState(false);
-  const [validating, setValidating] = useState(false);
-
+  // callback used to submit the modification
   const submitForm = useCallback(
     (e: any) => {
       e.preventDefault();
       setValidating(true);
       const currentName = !!challenge ? challenge?.name : '';
+      // check if a challenge to update is given
       if (currentName === name || !getOne(name)) {
         if (!!challenge) {
           dispatch({

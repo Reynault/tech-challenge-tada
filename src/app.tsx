@@ -14,6 +14,7 @@ import { PlayInGame } from './pages/play-in-game';
 import { PlaySelection } from './pages/play-selection';
 import { Routes } from './shared/constants/routes';
 
+// setting default theme using material ui
 let theme = unstable_createMuiStrictModeTheme({
   palette: {
     type: 'dark',
@@ -25,12 +26,18 @@ let theme = unstable_createMuiStrictModeTheme({
     }
   }
 });
+// setting a responsive typography
 theme = responsiveFontSizes(theme);
 
+/**
+ * Entrypoint of the application
+ */
 export const App: React.FunctionComponent = () => {
   return (
+    // context that provides a default theme
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      {/* provides a list of challenges from local storage */}
       <ChallengeProvider>
         <Router>
           <Navbar />

@@ -7,6 +7,12 @@ export interface TimerProviderProps {
   delay?: number;
 }
 
+/**
+ * Timer used to display an ongoing time
+ * @param start boolean that indicates when to start
+ * @param startingTime time when to start to count
+ * @param delay refresh delay
+ */
 export const Timer: React.FunctionComponent<TimerProviderProps> = ({
   start,
   startingTime,
@@ -14,7 +20,9 @@ export const Timer: React.FunctionComponent<TimerProviderProps> = ({
 }) => {
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState(null);
-
+  /**
+   * Start the timer
+   */
   const startCallback = useCallback(() => {
     setTimer(
       setInterval(() => {
@@ -22,20 +30,25 @@ export const Timer: React.FunctionComponent<TimerProviderProps> = ({
       }, delay)
     );
   }, [startingTime, setTime, setTimer, delay]);
-
+  /**
+   * Stop it
+   */
   const stopCallback = useCallback(() => {
+    // by changing the timer
     setTimer(null);
   }, [setTimer]);
-
   /**
-   * Remove old timer when new value or when the timer is changed
+   * When the timer is changed, remove the old one.
+   * This also clear the current timer if the component is unmounted
    */
   useEffect(() => {
     return () => {
       clearInterval(timer);
     };
   }, [timer]);
-
+  /**
+   * when start is changed, stop or start the timer
+   */
   useEffect(() => {
     if (start) {
       startCallback();

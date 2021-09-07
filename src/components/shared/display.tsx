@@ -16,6 +16,10 @@ export interface DisplayProps {
   value: string;
 }
 
+/**
+ * Component used to display a challenge value with overflow
+ * @param value to display
+ */
 export const Display: React.FunctionComponent<DisplayProps> = ({ value }) => {
   const { overflowedField } = displayStyle();
   return <span className={overflowedField}>{!!value ? value : ''}</span>;

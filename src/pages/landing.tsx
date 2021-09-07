@@ -13,6 +13,9 @@ export const landingStyle = makeStyles({
   }
 });
 
+/**
+ * Landing page of the application
+ */
 export const Landing: React.FunctionComponent = () => {
   const { landingDescription } = landingStyle();
   const { responsiveButton } = globalStyles();

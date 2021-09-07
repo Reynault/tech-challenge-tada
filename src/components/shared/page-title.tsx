@@ -6,6 +6,10 @@ export interface PageTitleProps {
   label: string;
 }
 
+/**
+ * Component that provides the title of the page
+ * @param label the title to display
+ */
 export const PageTitle: React.FunctionComponent<PageTitleProps> = ({
   label
 }) => {

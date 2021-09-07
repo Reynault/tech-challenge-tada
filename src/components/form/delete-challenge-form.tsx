@@ -12,6 +12,10 @@ export interface DeleteChallengeFormProps {
   challenge?: ChallengeDto;
 }
 
+/**
+ * Form used to delete a challenge
+ * @param challenge to delete
+ */
 export const DeleteChallengeForm: React.FunctionComponent<DeleteChallengeFormProps> = ({
   challenge
 }) => {
@@ -19,7 +23,7 @@ export const DeleteChallengeForm: React.FunctionComponent<DeleteChallengeFormPro
 
   const { dispatch } = useContext(ChallengesContext);
   const { hideDialog } = useContext(DialogContext);
-
+  // callback used to delete a challenge using dispatch
   const deleteProcedure = useCallback(() => {
     if (!!challenge) {
       dispatch({ type: ChallengeActionType.DELETE, payload: challenge });

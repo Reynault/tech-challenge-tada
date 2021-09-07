@@ -4,9 +4,14 @@ import { ChallengesContext } from '../../contexts/challenges/challenges-context'
 import { ChallengeActionType } from '../../contexts/challenges/challenges-reducer';
 import { globalStyles } from '../../shared/styles/globalStyles';
 
+/**
+ * When the list of challenges is empty, indicates it
+ * and display a button to populate it with default values
+ */
 export const PopulateChallengesButton: React.FunctionComponent = () => {
   const { dispatch } = useContext(ChallengesContext);
   const { centeredElement } = globalStyles();
+  // callback to populate with default values
   const populate = useCallback(() => {
     dispatch({ type: ChallengeActionType.POPULATE });
   }, [dispatch]);

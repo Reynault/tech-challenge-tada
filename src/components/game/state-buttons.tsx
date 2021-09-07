@@ -5,6 +5,9 @@ import { GameContext } from '../../contexts/game-context';
 import { Routes } from '../../shared/constants/routes';
 import { globalStyles } from '../../shared/styles/globalStyles';
 
+/**
+ * Buttons used to manage a game (reset it or change the current challenge)
+ */
 export const StateButtons: React.FunctionComponent = () => {
   const { flexButtons } = globalStyles();
   const { resetGame, launched } = useContext(GameContext);

@@ -13,6 +13,9 @@ const appTitleStyle = makeStyles(theme => ({
   }
 }));
 
+/**
+ * Navbar title (link without <a> decoration)
+ */
 export const AppTitle: React.FunctionComponent = () => {
   const [showUnderline, setShowUnderline] = useState(false);
   const { withoutDecoration, withDecoration } = appTitleStyle();

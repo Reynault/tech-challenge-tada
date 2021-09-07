@@ -13,6 +13,9 @@ const backgroundStyle = makeStyles({
   }
 });
 
+/**
+ * Component that provides the background image of the landing page
+ */
 export const LandingBackground: React.FunctionComponent = () => {
   const { landingBackgroundImage } = backgroundStyle();
   return <Box className={landingBackgroundImage} />;

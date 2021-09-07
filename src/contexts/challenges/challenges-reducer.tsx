@@ -1,7 +1,7 @@
 import { Reducer } from 'react';
 import { DefaultChallenges } from '../../assets/data/default-challenges';
 import { ChallengeDto } from '../../shared/dto/challenge-dto';
-
+// available actions
 export enum ChallengeActionType {
   PUT = 'put',
   POST = 'post',
@@ -9,7 +9,7 @@ export enum ChallengeActionType {
   DELETE_ALL = 'deleteAll',
   POPULATE = 'populate'
 }
-
+// an action is defined by an action type, a payload and the modified challenge (old)
 export interface ChallengeAction {
   type: ChallengeActionType;
   payload?: ChallengeDto;
@@ -71,7 +71,11 @@ export const get = (): ChallengeDto[] => {
   }
 };
 
-// Defining challenges reducer
+/**
+ * Defining challenges reducer
+ * @param state the current state of the challenges list
+ * @param action to process
+ */
 export const ChallengesReducer: Reducer<ChallengeDto[], ChallengeAction> = (
   state: ChallengeDto[],
   action: ChallengeAction

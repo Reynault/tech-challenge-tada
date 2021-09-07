@@ -12,16 +12,21 @@ export interface ManageOneChallengeButtons {
   challenge: ChallengeDto;
 }
 
+/**
+ * Three buttons to play, delete and update the current challenge
+ * @param challenge managed
+ */
 export const ManageOneChallengeButtons: React.FunctionComponent<ManageOneChallengeButtons> = ({
   challenge
 }) => {
   const { showDialog } = useContext(DialogContext);
   const { flexButtons } = globalStyles();
-
-  const openUpdateModal = useCallback(() => {
+  // open update dialog
+  const openUpdateDialog = useCallback(() => {
     showDialog(<UpdateChallengeForm {...{ challenge }} />);
   }, [showDialog, challenge]);
-  const openDeleteModal = useCallback(() => {
+  // open delete dialog
+  const openDeleteDialog = useCallback(() => {
     showDialog(<DeleteChallengeForm {...{ challenge }} />);
   }, [showDialog, challenge]);
   return (
@@ -33,10 +38,10 @@ export const ManageOneChallengeButtons: React.FunctionComponent<ManageOneChallen
       >
         Play
       </Button>
-      <Button onClick={openUpdateModal} color="primary" variant="outlined">
+      <Button onClick={openUpdateDialog} color="primary" variant="outlined">
         Update
       </Button>
-      <Button onClick={openDeleteModal} color="secondary" variant="outlined">
+      <Button onClick={openDeleteDialog} color="secondary" variant="outlined">
         Delete
       </Button>
     </Box>

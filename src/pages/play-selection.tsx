@@ -9,6 +9,9 @@ import { ChallengesContext } from '../contexts/challenges/challenges-context';
 import { DialogProvider } from '../contexts/dialog-context';
 import { globalStyles } from '../shared/styles/globalStyles';
 
+/**
+ * Challenge selection page
+ */
 export const PlaySelection: React.FunctionComponent = () => {
   const { state, isChallengesEmpty } = useContext(ChallengesContext);
   const { pageBody } = globalStyles();
@@ -23,8 +26,11 @@ export const PlaySelection: React.FunctionComponent = () => {
           }}
         />
       ) : (
+        // If challenges is empty, display a way
+        // to populate quickly the list
         <PopulateChallengesButton />
       )}
+      {/* Context that provides a dialog to show or hide */}
       <DialogProvider>
         <ManageChallengesButtons />
       </DialogProvider>

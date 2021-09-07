@@ -7,10 +7,16 @@ export interface DifficultyProps {
   maximalNumberOfStars?: number;
 }
 
+/**
+ * Component that converts a number into a list of stars
+ * @param value to convert
+ * @param maximalNumberOfStars maximal number of stars
+ */
 export const Stars: React.FunctionComponent<DifficultyProps> = ({
   value = 0,
   maximalNumberOfStars = 5
 }) => {
+  // build start based on the value
   const displayStars = useCallback(() => {
     const stars = [];
     let i;

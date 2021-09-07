@@ -18,6 +18,9 @@ export const notFoundStyle = makeStyles({
   }
 });
 
+/**
+ * 404 page when trying to access an inexistant url
+ */
 export const NotFoundError: React.FunctionComponent = () => {
   const { responsiveButton } = globalStyles();
   const { image } = notFoundStyle();

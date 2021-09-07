@@ -25,6 +25,10 @@ export interface ChallengeListProps {
   howToDisplay: React.FunctionComponent<ChallengeDto>;
 }
 
+/**
+ * List of challenges
+ * @param props challenges to display and how to do it
+ */
 export const ChallengeList: React.FunctionComponent<ChallengeListProps> = (
   props: ChallengeListProps
 ) => {
@@ -45,6 +49,7 @@ export const ChallengeList: React.FunctionComponent<ChallengeListProps> = (
     setRows(r);
   }, [setRows, props]);
 
+  // when props is changed, re-render the component
   useEffect(() => {
     buildElementList();
   }, [props, buildElementList]);

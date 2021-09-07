@@ -23,6 +23,10 @@ export interface LandingAppTitleProps {
   children: JSX.Element;
 }
 
+/**
+ * Component used to display something with the landing page style
+ * @param children the children elements to display
+ */
 export const LandingAppTitle: React.FunctionComponent<LandingAppTitleProps> = ({
   children
 }) => {
