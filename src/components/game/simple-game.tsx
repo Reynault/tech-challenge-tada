@@ -77,10 +77,16 @@ export const SimpleGame: React.FunctionComponent<SimpleGameProps> = ({
               timer exported into a component, to avoir re-rendering when
               time is changing (every milliseconds)
             */}
-            Time:{' '}
-            <Timer start={state.launched} startingTime={state.startingTime} />
+            Time:
+            {!state.launched && !state.finished ? (
+              '--:--'
+            ) : (
+              <Timer start={state.launched} startingTime={state.startingTime} />
+            )}
           </Typography>
-          <Typography variant="body1">Errors: {state.error}</Typography>
+          <Typography variant="body1">
+            Errors: {!state.launched && !state.finished ? '--' : state.error}
+          </Typography>
         </Box>
         {/* best score */}
         <Box>

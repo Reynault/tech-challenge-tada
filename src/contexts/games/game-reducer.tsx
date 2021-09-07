@@ -35,7 +35,7 @@ const resetGame = (state: GameDto): GameDto => {
 /**
  * Method used to launch the game
  */
-const launchGame = (state: GameDto): GameDto => {
+const launchGame = (state: GameDto, key?: string): GameDto => {
   const newState = Object.assign({}, state);
   newState.launched = true;
   newState.finished = false;
@@ -43,6 +43,9 @@ const launchGame = (state: GameDto): GameDto => {
   newState.typedKey = null;
   newState.textToType = state.initialText;
   newState.startingTime = Date.now();
+  if (!!key) {
+    Object.assign(newState, typeKey(newState, key));
+  }
   return newState;
 };
 /**
@@ -78,7 +81,7 @@ export const GameReducer: Reducer<GameDto, GameAction> = (
 ) => {
   switch (action.type) {
     case GameActionType.LAUNCH:
-      state = launchGame(state);
+      state = launchGame(state, action.key);
       break;
     case GameActionType.RESET:
       state = resetGame(state);

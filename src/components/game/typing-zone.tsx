@@ -59,32 +59,60 @@ export const TypingZone: React.FunctionComponent = () => {
   const { state, typeAKey, launchGame } = useContext(GameContext);
   // decorated typed text (with <span></span> for correct and incorrect characters)
   const [typedText, setTypedText] = useState(<></>);
+  // typed key queue use to store pending keys
+  const [keyQueue, setKeyQueue] = useState([]);
+  // boolean used to check whether a key is already being treated or not
+  const [alreadyTyping, setAlreadyTyping] = useState(false);
+  /**
+   * use effect used to consume the typed keys queue. It's mainly due to the fact that when a user
+   * is typing really fast, the callback used to type a key might be called twice
+   * which leads to an inconsistency in the game state. (a key typed twice for example)
+   *
+   * So in order to avoid that, we generate a queue that'll contain every key typed by
+   * the user and consume each one at one point. (in the exact order)
+   */
+  useEffect(() => {
+    // after each key given by the user or when the component is ready
+    // we consume one key from the queue that is storing pending inputs given by
+    // the user. it is to make sure that we handle every input from the user.
+    if (!alreadyTyping && keyQueue.length > 0) {
+      const nextEventToConsume = keyQueue.shift();
+      setKeyQueue(keyQueue.splice(1));
+      // indicates to the context that a key is already being processed
+      setAlreadyTyping(true);
+      typeAKey(nextEventToConsume);
+      setAlreadyTyping(false);
+    }
+  }, [alreadyTyping, typeAKey, keyQueue]);
   /**
    * callback used to handle key press
-   * event by typing the current key
+   * event by typing the current key.
+   * It stores a key typed by the user in a queue.
    */
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
-      typeAKey(event.key);
+      setKeyQueue(keyQueue.concat([event.key]));
     },
-    [typeAKey]
+    [setKeyQueue, keyQueue]
   );
   /**
    * callback used to clear the typed text and to launch the game
    */
-  const clearTextAndLaunchGame = useCallback(() => {
-    setTypedText(<></>);
-    launchGame();
-  }, [setTypedText, launchGame]);
+  const clearTextAndLaunchGame = useCallback(
+    (key?: string) => {
+      setTypedText(<></>);
+      launchGame(key);
+    },
+    [setTypedText, launchGame]
+  );
   /**
    * callback used to launch the game when typing a key at the beginning
    */
   const launchGameByTyping = useCallback(
     event => {
-      clearTextAndLaunchGame();
-      typeAKey(event.key);
+      clearTextAndLaunchGame(event.key);
     },
-    [clearTextAndLaunchGame, typeAKey]
+    [clearTextAndLaunchGame]
   );
   /**
    * use effect used to re-render the component
@@ -166,7 +194,7 @@ export const TypingZone: React.FunctionComponent = () => {
       {/* button used to start typing */}
       <Button
         disabled={state.launched}
-        onClick={clearTextAndLaunchGame}
+        onClick={() => clearTextAndLaunchGame()}
         className={typingZoneRibbon}
       >
         Type the first letter or click here to start the challenge
